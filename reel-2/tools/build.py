@@ -7,6 +7,7 @@ tools/edit_map.py, so the edit can be re-cut by changing CUTS and re-running:
 
 import json
 import os
+import re
 
 from edit_map import CUTS, END_HOLD, SOURCE_END, html as seg_html, out, segments, total
 
@@ -130,54 +131,46 @@ def L(src, start):
     return round(out(src) - out(start), 3)
 
 
+ICONS = json.load(open(os.path.join(ROOT, "tools", "icons.json")))  # name -> codepoint (subset font)
+
+
+def G_(name):
+    return "&#x%s;" % ICONS[name]
+
+
+def I(name):
+    # Icon glyphs sit in stacked state tiles (base + cross-faded overlay) by design.
+    return '<i class="ico" data-layout-allow-overlap>%s</i>' % G_(name)
+
+
 HOSTS = [
     # (host id, template, source start, source end, CFG in LOCAL seconds)
     ("site", "site.html", 1.6, 5.72, dict(
-        inAt=L(1.64, 1.6), typeAt=L(1.78, 1.6), typeDur=0.34, idleAt=L(4.2, 1.6), labelAt=L(4.86, 1.6), stopAt=L(5.1, 1.6))),
-    ("zero", "slabs.html", 6.1, 8.46, dict(
-        top=900, h=124, gap=14, dim=L(7.9, 6.1), outAt=None,
-        slabs=[dict(text="No leads", at=L(6.2, 6.1), right=dict(kind="zero", at=L(6.46, 6.1))),
-               dict(text="No calls", at=L(7.02, 6.1), right=dict(kind="zero", at=L(7.24, 6.1)))])),
+        inAt=L(1.64, 1.6), typeAt=L(1.76, 1.6), typeDur=0.56, idleAt=L(4.06, 1.6), stopAt=L(5.12, 1.6))),
+    ("zero", "zero.html", 6.1, 8.46, dict(
+        a=L(6.22, 6.1) - 0.04, an=L(6.4, 6.1), b=L(7.06, 6.1) - 0.04, bn=L(7.18, 6.1), mute=L(7.62, 6.1), outAt=L(7.86, 6.1))),
     ("brand", "brand.html", 10.44, 12.0, dict(kick=[0.0, 0.06], mono=0.16, name=L(10.9, 10.44), name2=L(11.44, 10.44), dur=L(12.0, 10.44))),
     ("who", "slabs.html", 12.58, 16.96, dict(
         top=880, h=124, gap=14, outAt=L(16.78, 12.58),
         lead=dict(y=1296, words=["We", "help"], at=[L(12.72, 12.58), L(12.88, 12.58)]),
-        slabs=[dict(text="Immigration consultants", at=L(13.14, 12.58), tile=dict(text="I")),
-               dict(text="Study abroad agencies", at=L(14.74, 12.58), tile=dict(text="S")),
-               dict(text="Clinics", at=L(16.22, 12.58), tile=dict(text="C"))])),
-    ("rail", "rail.html", 16.96, 20.44, dict(aAt=L(17.6, 16.96), bAt=L(19.42, 16.96), lineAt=L(19.58, 16.96), outAt=L(20.26, 16.96)),
-     dict(A="Found online", B="Clients")),
+        slabs=[dict(text="Immigration consultants", at=L(13.14, 12.58), icon=I("flight_takeoff"), tone="lemon", halo="lemon", haloOff=L(14.7, 12.58)),
+               dict(text="Study abroad agencies", at=L(14.74, 12.58), icon=I("school"), tone="lemon", halo="lemon", haloOff=L(16.2, 12.58)),
+               dict(text="Clinics", at=L(16.22, 12.58), icon=I("medical_services"), tone="lemon", halo="lemon")])),
+    ("found", "found.html", 16.96, 20.44, dict(
+        found=L(17.64, 16.96) - 0.12, online=L(17.98, 16.96), icon=I("person_add"),
+        toasts=[L(19.46, 16.96) - 0.08, L(19.8, 16.96) - 0.06, L(20.1, 16.96) - 0.06], outAt=L(20.28, 16.96))),
     ("nofluff", "slabs.html", 20.84, 23.98, dict(
         top=880, h=124, gap=14, outAt=None,
-        slabs=[dict(text="Fluff", at=L(21.14, 20.84), right=dict(kind="x", at=L(21.52, 20.84))),
-               dict(text="Jargon", at=L(21.98, 20.84), right=dict(kind="x", at=L(22.38, 20.84))),
-               dict(text="Just results", lemon=True, at=L(22.68, 20.84), right=dict(kind="tick", at=L(23.1, 20.84)))])),
+        slabs=[dict(text="Fluff", at=L(21.14, 20.84), icon=I("cloud"), tone="red", right=dict(kind="x", at=L(21.52, 20.84))),
+               dict(text="Jargon", at=L(21.98, 20.84), icon=I("translate"), tone="red", right=dict(kind="x", at=L(22.38, 20.84))),
+               dict(text="Just results", lemon=True, at=L(22.68, 20.84), icon=I("trending_up"), halo="lemon",
+                    right=dict(kind="tick", at=L(23.1, 20.84)))])),
     ("status", "status.html", 24.62, 28.56, dict(inAt=L(24.9, 24.62), bad=L(25.9, 24.62), good=L(27.62, 24.62), outAt=L(28.36, 24.62))),
     ("search", "search.html", 28.84, 32.2, dict(
-        inAt=L(29.42, 28.84), rows=[L(30.26, 28.84), L(30.6, 28.84), L(30.88, 28.84)],
-        typeAt=L(31.3, 28.84), typeDur=0.3, outAt=L(31.96, 28.84))),
+        inAt=L(29.2, 28.84), query="study abroad consultant", typeAt=L(29.46, 28.84), typeDur=0.62,
+        rows=[L(30.26, 28.84), L(30.6, 28.84), L(30.88, 28.84)], star=I("star"), upIcon=I("trending_up"),
+        google=L(31.34, 28.84) - 0.04, outAt=L(31.96, 28.84))),
 ]
-
-# --------------------------------------------------------------------------- SFX (source s)
-SFX = [
-    ("bar-in", "whoosh-short", 1.62, 0.22), ("type1", "key-press", 1.8, 0.3),
-    ("idle", "whoosh-short", 4.18, 0.2), ("nothing1", "impact-bass-1", 5.1, 0.24),
-    ("z1", "whoosh-short", 6.18, 0.2), ("z1n", "click", 6.46, 0.3),
-    ("z2", "whoosh-short", 7.0, 0.2), ("z2n", "click", 7.24, 0.3),
-    ("nothing2", "impact-bass-1", 7.92, 0.24),
-    ("brand-in", "whoosh", 10.42, 0.26), ("mono", "pop", 10.58, 0.24), ("ventures", "click-soft", 11.42, 0.4),
-    ("who1", "pop", 13.14, 0.2), ("who2", "pop", 14.74, 0.2), ("who3", "pop", 16.22, 0.2),
-    ("node1", "click-soft", 17.6, 0.4), ("node2", "click-soft", 19.42, 0.4), ("line", "whoosh-short", 19.58, 0.18),
-    ("f1", "whoosh-short", 21.12, 0.2), ("x1", "click", 21.62, 0.32),
-    ("f2", "whoosh-short", 21.96, 0.2), ("x2", "click", 22.48, 0.32),
-    ("results", "pop", 22.66, 0.26), ("tick", "click-soft", 23.1, 0.45),
-    ("blur", "whoosh", 23.8, 0.28),
-    ("st-in", "whoosh-short", 24.88, 0.22), ("broken", "impact-bass-1", 25.88, 0.22), ("fix", "pop", 27.6, 0.26),
-    ("search-in", "whoosh-short", 29.4, 0.22),
-    ("r1", "pop", 30.26, 0.18), ("r2", "pop", 30.6, 0.18), ("r3", "pop", 30.88, 0.18), ("type2", "key-press", 31.3, 0.3),
-    ("end", "whoosh", 33.22, 0.2),
-]
-SFX_DUR = {"whoosh-short": 0.57, "whoosh": 0.57, "impact-bass-1": 1.0, "pop": 0.7, "click": 0.36, "click-soft": 0.36, "key-press": 0.43}
 
 # Footage-variant windows (source s): each becomes one <video> inside its wrap layer. Windows start
 # well before their moment (the wrap's opacity gates them): sub-second clips fail the render's
@@ -199,6 +192,8 @@ def render_scene(hid, tpl, cfg, text=None):
         rep["{{%s}}" % k] = v
     for k, v in rep.items():
         S = S.replace(k, v)
+    S = re.sub(r"\{\{I:([a-z_]+)\}\}", lambda m: I(m.group(1)), S)
+    S = re.sub(r"\{\{G:([a-z_]+)\}\}", lambda m: G_(m.group(1)), S)
     assert "{{" not in S, (tpl, S[S.index("{{"):S.index("{{") + 40])
     open(os.path.join(ROOT, "compositions", hid + ".html"), "w").write(S)
 
@@ -230,17 +225,10 @@ def main():
             f'data-start="{out(s)}" data-duration="{round(out(e) - out(s), 3)}" data-track-index="4" data-width="1080" data-height="1920"></div>\n'
             f"      </div>"
         )
-    sfx = []
-    for sid, f, s, vol in SFX:
-        sfx.append(
-            f'      <audio id="sfx-{sid}" src="assets/sfx/{f}.mp3" data-start="{out(s)}" data-duration="{SFX_DUR[f]}" '
-            f'data-track-index="{12 + len(sfx) % 5}" data-volume="{vol}"></audio>'
-        )
     rep = {
         "{{TOTAL}}": str(total()),
         "{{SEGMENTS}}": videos,
         "{{VOICE}}": voice,
-        "{{SFX}}": "\n".join(sfx),
         "{{HOSTS}}": "\n".join(hosts),
         "{{HOLD_START}}": str(out(SOURCE_END)),
         "{{HOLD_DUR}}": str(END_HOLD),

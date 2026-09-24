@@ -64,12 +64,14 @@
         /* ---------- v3 reference components (luemmy21 / tubetactix) ---------- */
         /* White card: the "Storyblocks" card. Pure white, modest radius, one soft shadow. */
         .wcard {
-          background: #ffffff;
-          border-radius: 26px;
+          background: linear-gradient(180deg, #ffffff 0%, #fbfbf8 55%, #f1f1ec 100%);
+          border-radius: 30px;
           box-shadow:
-            0 2px 0 rgba(255, 255, 255, 0.9) inset,
-            0 18px 40px rgba(8, 6, 10, 0.38),
-            0 3px 8px rgba(8, 6, 10, 0.22);
+            inset 0 1.5px 0 #ffffff,
+            inset 0 -2px 0 rgba(14, 11, 16, 0.05),
+            0 0 0 1px rgba(255, 255, 255, 0.5),
+            0 34px 60px -18px rgba(8, 6, 10, 0.6),
+            0 12px 24px -6px rgba(8, 6, 10, 0.26);
         }
         /* Lemon tile: the "1 2 3 / Pr" tile. Pale bevel edge, soft glow. */
         .ltile {
@@ -187,6 +189,118 @@
           letter-spacing: -0.02em;
           color: #15121a;
           white-space: nowrap;
+        }
+        /* ---------- v2 premium kit ---------- */
+        /* Icon glyphs: Material Symbols Rounded (filled, wght 500), subset to tools/icons.json. */
+        @font-face {
+          font-family: "Icons";
+          src: url("assets/fonts/Icons-Rounded-Filled.woff2") format("woff2");
+          font-weight: normal;
+          font-style: normal;
+        }
+        .ico {
+          display: block;
+          font-family: "Icons";
+          font-style: normal;
+          font-weight: normal;
+          line-height: 1;
+          letter-spacing: 0;
+          -webkit-font-smoothing: antialiased;
+        }
+        /* App-icon tile: glossy squircle, ink by default with a lit lemon glyph. */
+        .appi {
+          position: relative;
+          flex: none;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: var(--s, 88px);
+          height: var(--s, 88px);
+          border-radius: 30%;
+          background: linear-gradient(160deg, #3b3a45 0%, #1c1b22 55%, #0f0e13 100%);
+          box-shadow:
+            inset 0 1.5px 0 rgba(255, 255, 255, 0.24),
+            inset 0 -3px 6px rgba(0, 0, 0, 0.4),
+            0 10px 22px rgba(8, 6, 10, 0.32);
+          color: #f6f97f;
+        }
+        .appi::after {
+          content: "";
+          position: absolute;
+          inset: 0;
+          border-radius: inherit;
+          background: linear-gradient(180deg, rgba(255, 255, 255, 0.17) 0%, rgba(255, 255, 255, 0) 50%);
+          pointer-events: none;
+        }
+        .appi .ico {
+          font-size: calc(var(--s, 88px) * 0.56);
+          text-shadow: 0 0 18px rgba(246, 249, 127, 0.55);
+        }
+        .appi.lemon {
+          background: linear-gradient(160deg, #fdffc8 0%, #f4f77e 55%, #e0e44a 100%);
+          box-shadow:
+            inset 0 1.5px 0 #ffffff,
+            inset 0 -4px 8px rgba(150, 150, 20, 0.35),
+            0 0 26px rgba(246, 249, 127, 0.5),
+            0 10px 22px rgba(8, 6, 10, 0.28);
+          color: #15121a;
+        }
+        .appi.lemon .ico {
+          text-shadow: none;
+        }
+        .appi.red {
+          background: linear-gradient(160deg, #ff6a77 0%, #ec1c2f 60%, #b50d1f 100%);
+          box-shadow:
+            inset 0 1.5px 0 rgba(255, 255, 255, 0.35),
+            inset 0 -3px 6px rgba(80, 0, 10, 0.35),
+            0 0 24px rgba(255, 46, 63, 0.45),
+            0 10px 22px rgba(8, 6, 10, 0.3);
+          color: #ffffff;
+        }
+        .appi.red .ico {
+          text-shadow: 0 0 12px rgba(255, 255, 255, 0.35);
+        }
+        .appi.mute {
+          background: linear-gradient(160deg, #f3f3f5 0%, #e3e4e9 100%);
+          box-shadow:
+            inset 0 1.5px 0 #ffffff,
+            inset 0 -2px 4px rgba(14, 11, 16, 0.08);
+          color: #a3a5ae;
+        }
+        .appi.mute .ico {
+          text-shadow: none;
+        }
+        /* Stacked state tiles: overlays cross-fade over the base tile. */
+        .appi.over {
+          position: absolute;
+          left: 0;
+          top: 0;
+          opacity: 0;
+        }
+        /* Soft coloured halo around a card (ring + bloom); fade via opacity. */
+        .halo {
+          position: absolute;
+          inset: 0;
+          border-radius: inherit;
+          pointer-events: none;
+          opacity: 0;
+          box-shadow:
+            0 0 0 2.5px rgba(246, 249, 127, 0.95),
+            0 0 46px rgba(246, 249, 127, 0.5);
+        }
+        .halo.red {
+          box-shadow:
+            0 0 0 2.5px rgba(255, 66, 82, 0.95),
+            0 0 46px rgba(255, 46, 63, 0.45);
+        }
+        /* Dark glass: notification toasts. */
+        .dglass {
+          border-radius: 28px;
+          background: linear-gradient(180deg, rgba(40, 38, 48, 0.94), rgba(20, 18, 26, 0.94));
+          box-shadow:
+            inset 0 1px 0 rgba(255, 255, 255, 0.14),
+            inset 0 0 0 1px rgba(255, 255, 255, 0.06),
+            0 24px 48px -12px rgba(8, 6, 10, 0.6);
         }
         /* "…why we started Verdexo Ventures": the one light cutaway. Cream -> pale-lemon ground,
            lemon monogram tile, ink wordmark as spoken. Hard cut in and out. */

@@ -64,12 +64,14 @@
         /* ---------- v3 reference components (luemmy21 / tubetactix) ---------- */
         /* White card: the "Storyblocks" card. Pure white, modest radius, one soft shadow. */
         .wcard {
-          background: #ffffff;
-          border-radius: 26px;
+          background: linear-gradient(180deg, #ffffff 0%, #fbfbf8 55%, #f1f1ec 100%);
+          border-radius: 30px;
           box-shadow:
-            0 2px 0 rgba(255, 255, 255, 0.9) inset,
-            0 18px 40px rgba(8, 6, 10, 0.38),
-            0 3px 8px rgba(8, 6, 10, 0.22);
+            inset 0 1.5px 0 #ffffff,
+            inset 0 -2px 0 rgba(14, 11, 16, 0.05),
+            0 0 0 1px rgba(255, 255, 255, 0.5),
+            0 34px 60px -18px rgba(8, 6, 10, 0.6),
+            0 12px 24px -6px rgba(8, 6, 10, 0.26);
         }
         /* Lemon tile: the "1 2 3 / Pr" tile. Pale bevel edge, soft glow. */
         .ltile {
@@ -188,8 +190,121 @@
           color: #15121a;
           white-space: nowrap;
         }
+        /* ---------- v2 premium kit ---------- */
+        /* Icon glyphs: Material Symbols Rounded (filled, wght 500), subset to tools/icons.json. */
+        @font-face {
+          font-family: "Icons";
+          src: url("assets/fonts/Icons-Rounded-Filled.woff2") format("woff2");
+          font-weight: normal;
+          font-style: normal;
+        }
+        .ico {
+          display: block;
+          font-family: "Icons";
+          font-style: normal;
+          font-weight: normal;
+          line-height: 1;
+          letter-spacing: 0;
+          -webkit-font-smoothing: antialiased;
+        }
+        /* App-icon tile: glossy squircle, ink by default with a lit lemon glyph. */
+        .appi {
+          position: relative;
+          flex: none;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: var(--s, 88px);
+          height: var(--s, 88px);
+          border-radius: 30%;
+          background: linear-gradient(160deg, #3b3a45 0%, #1c1b22 55%, #0f0e13 100%);
+          box-shadow:
+            inset 0 1.5px 0 rgba(255, 255, 255, 0.24),
+            inset 0 -3px 6px rgba(0, 0, 0, 0.4),
+            0 10px 22px rgba(8, 6, 10, 0.32);
+          color: #f6f97f;
+        }
+        .appi::after {
+          content: "";
+          position: absolute;
+          inset: 0;
+          border-radius: inherit;
+          background: linear-gradient(180deg, rgba(255, 255, 255, 0.17) 0%, rgba(255, 255, 255, 0) 50%);
+          pointer-events: none;
+        }
+        .appi .ico {
+          font-size: calc(var(--s, 88px) * 0.56);
+          text-shadow: 0 0 18px rgba(246, 249, 127, 0.55);
+        }
+        .appi.lemon {
+          background: linear-gradient(160deg, #fdffc8 0%, #f4f77e 55%, #e0e44a 100%);
+          box-shadow:
+            inset 0 1.5px 0 #ffffff,
+            inset 0 -4px 8px rgba(150, 150, 20, 0.35),
+            0 0 26px rgba(246, 249, 127, 0.5),
+            0 10px 22px rgba(8, 6, 10, 0.28);
+          color: #15121a;
+        }
+        .appi.lemon .ico {
+          text-shadow: none;
+        }
+        .appi.red {
+          background: linear-gradient(160deg, #ff6a77 0%, #ec1c2f 60%, #b50d1f 100%);
+          box-shadow:
+            inset 0 1.5px 0 rgba(255, 255, 255, 0.35),
+            inset 0 -3px 6px rgba(80, 0, 10, 0.35),
+            0 0 24px rgba(255, 46, 63, 0.45),
+            0 10px 22px rgba(8, 6, 10, 0.3);
+          color: #ffffff;
+        }
+        .appi.red .ico {
+          text-shadow: 0 0 12px rgba(255, 255, 255, 0.35);
+        }
+        .appi.mute {
+          background: linear-gradient(160deg, #f3f3f5 0%, #e3e4e9 100%);
+          box-shadow:
+            inset 0 1.5px 0 #ffffff,
+            inset 0 -2px 4px rgba(14, 11, 16, 0.08);
+          color: #a3a5ae;
+        }
+        .appi.mute .ico {
+          text-shadow: none;
+        }
+        /* Stacked state tiles: overlays cross-fade over the base tile. */
+        .appi.over {
+          position: absolute;
+          left: 0;
+          top: 0;
+          opacity: 0;
+        }
+        /* Soft coloured halo around a card (ring + bloom); fade via opacity. */
+        .halo {
+          position: absolute;
+          inset: 0;
+          border-radius: inherit;
+          pointer-events: none;
+          opacity: 0;
+          box-shadow:
+            0 0 0 2.5px rgba(246, 249, 127, 0.95),
+            0 0 46px rgba(246, 249, 127, 0.5);
+        }
+        .halo.red {
+          box-shadow:
+            0 0 0 2.5px rgba(255, 66, 82, 0.95),
+            0 0 46px rgba(255, 46, 63, 0.45);
+        }
+        /* Dark glass: notification toasts. */
+        .dglass {
+          border-radius: 28px;
+          background: linear-gradient(180deg, rgba(40, 38, 48, 0.94), rgba(20, 18, 26, 0.94));
+          box-shadow:
+            inset 0 1px 0 rgba(255, 255, 255, 0.14),
+            inset 0 0 0 1px rgba(255, 255, 255, 0.06),
+            0 24px 48px -12px rgba(8, 6, 10, 0.6);
+        }
         /* Stacked cards over the sharp footage at chest height, 14px gap, one line of spoken words
-           each. Optional initial tile on the left, and a zero pill / strike + cross / tick on the right. */
+           each: glossy icon tile on the left, optional strike + cross / tick on the right, and a
+           soft halo that lights the card when it lands. */
         .slab {
           position: absolute;
           left: 120px;
@@ -202,7 +317,14 @@
           opacity: 0;
         }
         .slab.has-tile {
-          padding-left: 132px;
+          padding-left: 20px;
+        }
+        .slab .appi {
+          --s: 88px;
+        }
+        .slab .tw {
+          position: relative;
+          flex: none;
         }
         .slab.lemon {
           border-radius: 26px;
@@ -224,34 +346,10 @@
           font-size: 56px;
           letter-spacing: -0.005em;
         }
-        .itile.red {
-          background: #ffe3e6;
-          color: #e0162a;
-        }
-        .itile.red .tnum {
-          color: #e0162a;
-        }
         .right {
           margin-left: auto;
           flex: none;
           opacity: 0;
-        }
-        .zero {
-          height: 76px;
-          min-width: 110px;
-          padding: 0 28px;
-          box-sizing: border-box;
-          border-radius: 38px;
-          background: linear-gradient(180deg, #ff4a58, #e0162a);
-          box-shadow: 0 8px 18px rgba(224, 22, 42, 0.36);
-          color: #ffffff;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          font-style: italic;
-          font-weight: 900;
-          font-stretch: 118%;
-          font-size: 42px;
         }
         .strike {
           position: absolute;
@@ -293,11 +391,10 @@
 
       <script>
         (function () {
-          const C = {"top": 880, "h": 124, "gap": 14, "outAt": 4.2, "lead": {"y": 1296, "words": ["We", "help"], "at": [0.14, 0.3]}, "slabs": [{"text": "Immigration consultants", "at": 0.56, "tile": {"text": "I"}}, {"text": "Study abroad agencies", "at": 2.16, "tile": {"text": "S"}}, {"text": "Clinics", "at": 3.64, "tile": {"text": "C"}}]};
+          const C = {"top": 880, "h": 124, "gap": 14, "outAt": 4.2, "lead": {"y": 1296, "words": ["We", "help"], "at": [0.14, 0.3]}, "slabs": [{"text": "Immigration consultants", "at": 0.56, "icon": "<i class=\"ico\" data-layout-allow-overlap>&#xe905;</i>", "tone": "lemon", "halo": "lemon", "haloOff": 2.12}, {"text": "Study abroad agencies", "at": 2.16, "icon": "<i class=\"ico\" data-layout-allow-overlap>&#xe80c;</i>", "tone": "lemon", "halo": "lemon", "haloOff": 3.62}, {"text": "Clinics", "at": 3.64, "icon": "<i class=\"ico\" data-layout-allow-overlap>&#xf109;</i>", "tone": "lemon", "halo": "lemon"}]};
           const host = document.getElementById("slabs");
           const tl = gsap.timeline({ paused: true });
           const RIGHT = {
-            zero: '<span class="zero">0</span>',
             x: '<span class="xmark"></span>',
             tick: '<span class="tick"></span>',
           };
@@ -318,14 +415,18 @@
 
           C.slabs.forEach((s, i) => {
             const el = document.createElement("div");
-            el.className = "slab " + (s.lemon ? "lemon" : "wcard") + (s.tile ? " has-tile" : "");
+            el.className = "slab " + (s.lemon ? "lemon" : "wcard") + (s.icon ? " has-tile" : "");
             el.id = "s" + i;
             el.style.top = C.top + i * (C.h + C.gap) + "px";
             el.style.height = C.h + "px";
-            const tile = s.tile ? '<div class="itile ' + (s.tile.tone === "red" ? "red" : "ltile") + '" id="t' + i + '"><span class="tnum">' + s.tile.text + "</span></div>" : "";
+            const tile = s.icon
+              ? '<div class="tw" id="t' + i + '"><div class="appi ' + (s.tone || "") + '">' + s.icon + "</div>" +
+                (s.right && s.right.kind === "x" ? '<div class="appi mute over" data-layout-allow-overlap id="m' + i + '">' + s.icon + "</div>" : "") + "</div>"
+              : "";
+            const halo = s.halo ? '<div class="halo ' + (s.halo === "red" ? "red" : "") + '" id="h' + i + '"></div>' : "";
             const strike = s.right && s.right.kind === "x" ? '<span class="strike" id="k' + i + '"></span>' : "";
             const right = s.right ? '<div class="right" id="r' + i + '">' + RIGHT[s.right.kind] + "</div>" : "";
-            el.innerHTML = tile + '<div class="ctext">' + s.text + strike + "</div>" + right + '<div class="shine" id="sh' + i + '"></div>';
+            el.innerHTML = halo + tile + '<div class="ctext">' + s.text + strike + "</div>" + right + '<div class="shine" id="sh' + i + '"></div>';
             host.appendChild(el);
 
             if (s.lemon) {
@@ -333,15 +434,20 @@
             } else {
               tl.fromTo(el, { opacity: 0, y: 36, scale: 0.94 }, { opacity: 1, y: 0, scale: 1, duration: 0.36, ease: "back.out(1.5)" }, s.at);
             }
-            if (s.tile) tl.fromTo("#t" + i, { scale: 0.4, rotation: -12 }, { scale: 1, rotation: 0, duration: 0.34, ease: "back.out(2.2)" }, s.at + 0.05);
+            if (s.icon) tl.fromTo("#t" + i, { scale: 0.4, rotation: -14 }, { scale: 1, rotation: 0, duration: 0.38, ease: "back.out(2.4)" }, s.at + 0.05);
+            if (s.halo) {
+              tl.fromTo("#h" + i, { opacity: 0 }, { opacity: 1, duration: 0.2, ease: "power2.out" }, s.at + 0.1);
+              if (s.haloOff != null) tl.to("#h" + i, { opacity: 0, duration: 0.3, ease: "power2.in" }, s.haloOff);
+            }
             tl.fromTo("#sh" + i, { "--sx": "-140%" }, { "--sx": "360%", duration: 0.6, ease: "power2.inOut" }, s.at + 0.16);
             if (s.right) {
               const r = s.right;
               if (r.kind === "x") {
                 tl.to("#k" + i, { scaleX: 1, duration: 0.24, ease: "power2.inOut" }, r.at);
                 tl.to("#s" + i + " .ctext", { color: "#9a9ca6", duration: 0.2 }, r.at + 0.1);
+                if (s.icon) tl.to("#m" + i, { opacity: 1, duration: 0.2 }, r.at + 0.1);
               }
-              tl.fromTo("#r" + i, { opacity: 0, scale: 0, rotation: r.kind === "zero" ? 0 : -90 }, { opacity: 1, scale: 1, rotation: 0, duration: 0.3, ease: "back.out(2.2)" }, r.at + (r.kind === "x" ? 0.12 : 0));
+              tl.fromTo("#r" + i, { opacity: 0, scale: 0, rotation: -90 }, { opacity: 1, scale: 1, rotation: 0, duration: 0.3, ease: "back.out(2.2)" }, r.at + (r.kind === "x" ? 0.12 : 0));
             }
           });
           if (C.dim != null) tl.to(".slab.wcard", { opacity: 0.55, duration: 0.2, ease: "power2.out" }, C.dim);

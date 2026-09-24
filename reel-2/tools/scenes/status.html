@@ -23,28 +23,12 @@
           box-sizing: border-box;
           opacity: 0;
         }
-        .led {
+        .tw {
           position: relative;
-          width: 34px;
-          height: 34px;
           flex: none;
-          border-radius: 50%;
-          background: #c9cbd3;
-          box-shadow: inset 0 -3px 0 rgba(14, 11, 16, 0.12);
         }
-        .led i {
-          position: absolute;
-          inset: 0;
-          border-radius: 50%;
-          opacity: 0;
-        }
-        .led .r {
-          background: radial-gradient(circle at 40% 35%, #ff8a95, #e0162a 70%);
-          box-shadow: 0 0 16px rgba(224, 22, 42, 0.6);
-        }
-        .led .g {
-          background: radial-gradient(circle at 40% 35%, #feffc9, #e3e84a 70%);
-          box-shadow: 0 0 18px rgba(236, 241, 100, 0.8), 0 0 0 3px #15121a;
+        .tw .appi {
+          --s: 96px;
         }
         .name {
           flex: 1;
@@ -109,7 +93,9 @@
 
       <div id="root" data-composition-id="__ID__" data-width="1080" data-height="1920">
         <div class="vs wcard" id="vs">
-          <span class="led"><i class="r" id="led-r"></i><i class="g" id="led-g"></i></span>
+          <div class="halo red" id="hr"></div>
+          <div class="halo" id="hg"></div>
+          <div class="tw" id="tw"><div class="appi">{{I:language}}</div><div class="appi red over" data-layout-allow-overlap id="led-r">{{I:error}}</div><div class="appi lemon over" data-layout-allow-overlap id="led-g">{{I:bolt}}</div></div>
           <div class="name">Digital presence</div>
           <div class="pill">
             <div class="pend" id="pend"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
@@ -130,11 +116,15 @@
           tl.to("#pend", { opacity: 0, duration: 0.06 }, C.bad - 0.06);
           tl.fromTo("#bad", { opacity: 0, scale: 1.3 }, { opacity: 1, scale: 1, duration: 0.2, ease: "back.out(2)" }, C.bad - 0.06);
           tl.set("#led-r", { opacity: 1 }, C.bad - 0.06);
+          tl.to("#hr", { opacity: 1, duration: 0.16, ease: "power2.out" }, C.bad - 0.04);
+          tl.fromTo("#tw", { rotation: 0 }, { keyframes: [{ rotation: -10 }, { rotation: 8 }, { rotation: -4 }, { rotation: 0 }], duration: 0.28, ease: "none" }, C.bad + 0.02);
           tl.to("#vs", { keyframes: [{ x: 10 }, { x: -8 }, { x: 5 }, { x: 0 }], duration: 0.2, ease: "none" }, C.bad + 0.08);
           tl.to("#bad", { opacity: 0, scale: 0.9, duration: 0.1, ease: "power2.in" }, C.good - 0.08);
           tl.fromTo("#good", { opacity: 0, scale: 1.3 }, { opacity: 1, scale: 1, duration: 0.24, ease: "back.out(2)" }, C.good - 0.04);
           tl.set("#led-r", { opacity: 0 }, C.good - 0.04);
-          tl.fromTo("#led-g", { opacity: 0, scale: 0.5 }, { opacity: 1, scale: 1, duration: 0.24, ease: "back.out(2.4)" }, C.good - 0.04);
+          tl.to("#hr", { opacity: 0, duration: 0.1 }, C.good - 0.06);
+          tl.to("#hg", { opacity: 1, duration: 0.24, ease: "power2.out" }, C.good);
+          tl.fromTo("#led-g", { opacity: 0, scale: 0.5, rotation: -20 }, { opacity: 1, scale: 1, rotation: 0, duration: 0.34, ease: "back.out(2.4)" }, C.good - 0.04);
           tl.fromTo("#vs-shine", { "--sx": "-140%" }, { "--sx": "360%", duration: 0.6, ease: "power2.inOut", immediateRender: false }, C.good + 0.14);
           tl.to("#vs", { y: 30, opacity: 0, scale: 0.96, duration: 0.2, ease: "power2.in" }, C.outAt);
           window.__timelines["__ID__"] = tl;

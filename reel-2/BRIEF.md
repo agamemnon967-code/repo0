@@ -13,8 +13,8 @@ length: 31.8s
 
 Edit of `prachi2.mp4` (33.7s) in the same premium, clean style as the approved SOP reel
 (`jazzyease/coursera-test`, `reel-full/`): same caption finish, lemon / white card kit, colour
-moments, camera and SFX grammar. The user asked for "no cheap shit, no SVGs": every graphic here is
-CSS-built (cards, tiles, marks, padlock, magnifier, spinner) and every text is her spoken words.
+moments and camera grammar. The user asked for "no cheap shit, no SVGs". v2 (after feedback) uses the old reel
+only as a reference: new scene concepts, glossy icon tiles, glowing cards, no SFX (added later by the user).
 
 ## Assets
 

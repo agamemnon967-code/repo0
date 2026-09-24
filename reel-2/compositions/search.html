@@ -64,12 +64,14 @@
         /* ---------- v3 reference components (luemmy21 / tubetactix) ---------- */
         /* White card: the "Storyblocks" card. Pure white, modest radius, one soft shadow. */
         .wcard {
-          background: #ffffff;
-          border-radius: 26px;
+          background: linear-gradient(180deg, #ffffff 0%, #fbfbf8 55%, #f1f1ec 100%);
+          border-radius: 30px;
           box-shadow:
-            0 2px 0 rgba(255, 255, 255, 0.9) inset,
-            0 18px 40px rgba(8, 6, 10, 0.38),
-            0 3px 8px rgba(8, 6, 10, 0.22);
+            inset 0 1.5px 0 #ffffff,
+            inset 0 -2px 0 rgba(14, 11, 16, 0.05),
+            0 0 0 1px rgba(255, 255, 255, 0.5),
+            0 34px 60px -18px rgba(8, 6, 10, 0.6),
+            0 12px 24px -6px rgba(8, 6, 10, 0.26);
         }
         /* Lemon tile: the "1 2 3 / Pr" tile. Pale bevel edge, soft glow. */
         .ltile {
@@ -188,98 +190,227 @@
           color: #15121a;
           white-space: nowrap;
         }
-        /* "your competitors are already showing up on Google": a search bar card, ranked result
-           cards drop in on "already showing up", the query types "Google" as spoken. */
-        .bar {
-          position: absolute;
-          left: 120px;
-          top: 850px;
-          width: 840px;
-          height: 104px;
+        /* ---------- v2 premium kit ---------- */
+        /* Icon glyphs: Material Symbols Rounded (filled, wght 500), subset to tools/icons.json. */
+        @font-face {
+          font-family: "Icons";
+          src: url("assets/fonts/Icons-Rounded-Filled.woff2") format("woff2");
+          font-weight: normal;
+          font-style: normal;
+        }
+        .ico {
+          display: block;
+          font-family: "Icons";
+          font-style: normal;
+          font-weight: normal;
+          line-height: 1;
+          letter-spacing: 0;
+          -webkit-font-smoothing: antialiased;
+        }
+        /* App-icon tile: glossy squircle, ink by default with a lit lemon glyph. */
+        .appi {
+          position: relative;
+          flex: none;
           display: flex;
           align-items: center;
-          gap: 24px;
-          padding: 0 34px;
-          box-sizing: border-box;
-          border-radius: 52px;
-          opacity: 0;
+          justify-content: center;
+          width: var(--s, 88px);
+          height: var(--s, 88px);
+          border-radius: 30%;
+          background: linear-gradient(160deg, #3b3a45 0%, #1c1b22 55%, #0f0e13 100%);
+          box-shadow:
+            inset 0 1.5px 0 rgba(255, 255, 255, 0.24),
+            inset 0 -3px 6px rgba(0, 0, 0, 0.4),
+            0 10px 22px rgba(8, 6, 10, 0.32);
+          color: #f6f97f;
         }
-        /* magnifier: bordered ring + rotated handle */
-        .mag {
-          position: relative;
-          width: 44px;
-          height: 44px;
-          flex: none;
-        }
-        .mag::before {
+        .appi::after {
           content: "";
+          position: absolute;
+          inset: 0;
+          border-radius: inherit;
+          background: linear-gradient(180deg, rgba(255, 255, 255, 0.17) 0%, rgba(255, 255, 255, 0) 50%);
+          pointer-events: none;
+        }
+        .appi .ico {
+          font-size: calc(var(--s, 88px) * 0.56);
+          text-shadow: 0 0 18px rgba(246, 249, 127, 0.55);
+        }
+        .appi.lemon {
+          background: linear-gradient(160deg, #fdffc8 0%, #f4f77e 55%, #e0e44a 100%);
+          box-shadow:
+            inset 0 1.5px 0 #ffffff,
+            inset 0 -4px 8px rgba(150, 150, 20, 0.35),
+            0 0 26px rgba(246, 249, 127, 0.5),
+            0 10px 22px rgba(8, 6, 10, 0.28);
+          color: #15121a;
+        }
+        .appi.lemon .ico {
+          text-shadow: none;
+        }
+        .appi.red {
+          background: linear-gradient(160deg, #ff6a77 0%, #ec1c2f 60%, #b50d1f 100%);
+          box-shadow:
+            inset 0 1.5px 0 rgba(255, 255, 255, 0.35),
+            inset 0 -3px 6px rgba(80, 0, 10, 0.35),
+            0 0 24px rgba(255, 46, 63, 0.45),
+            0 10px 22px rgba(8, 6, 10, 0.3);
+          color: #ffffff;
+        }
+        .appi.red .ico {
+          text-shadow: 0 0 12px rgba(255, 255, 255, 0.35);
+        }
+        .appi.mute {
+          background: linear-gradient(160deg, #f3f3f5 0%, #e3e4e9 100%);
+          box-shadow:
+            inset 0 1.5px 0 #ffffff,
+            inset 0 -2px 4px rgba(14, 11, 16, 0.08);
+          color: #a3a5ae;
+        }
+        .appi.mute .ico {
+          text-shadow: none;
+        }
+        /* Stacked state tiles: overlays cross-fade over the base tile. */
+        .appi.over {
           position: absolute;
           left: 0;
           top: 0;
-          width: 32px;
-          height: 32px;
-          box-sizing: border-box;
-          border: 6px solid #15121a;
-          border-radius: 50%;
+          opacity: 0;
         }
-        .mag::after {
-          content: "";
+        /* Soft coloured halo around a card (ring + bloom); fade via opacity. */
+        .halo {
           position: absolute;
-          left: 27px;
-          top: 30px;
-          width: 18px;
-          height: 7px;
-          border-radius: 4px;
-          background: #15121a;
-          transform: rotate(45deg);
-          transform-origin: left center;
+          inset: 0;
+          border-radius: inherit;
+          pointer-events: none;
+          opacity: 0;
+          box-shadow:
+            0 0 0 2.5px rgba(246, 249, 127, 0.95),
+            0 0 46px rgba(246, 249, 127, 0.5);
+        }
+        .halo.red {
+          box-shadow:
+            0 0 0 2.5px rgba(255, 66, 82, 0.95),
+            0 0 46px rgba(255, 46, 63, 0.45);
+        }
+        /* Dark glass: notification toasts. */
+        .dglass {
+          border-radius: 28px;
+          background: linear-gradient(180deg, rgba(40, 38, 48, 0.94), rgba(20, 18, 26, 0.94));
+          box-shadow:
+            inset 0 1px 0 rgba(255, 255, 255, 0.14),
+            inset 0 0 0 1px rgba(255, 255, 255, 0.06),
+            0 24px 48px -12px rgba(8, 6, 10, 0.6);
+        }
+        /* "…your competitors are already showing up on Google": a search bar types what her clients
+           would search, ranked competitor results drop in on "already showing up", and the bar lights
+           up on "Google". */
+        .bar {
+          position: absolute;
+          left: 110px;
+          top: 842px;
+          width: 860px;
+          height: 108px;
+          display: flex;
+          align-items: center;
+          gap: 20px;
+          padding: 0 18px 0 34px;
+          box-sizing: border-box;
+          border-radius: 54px;
+          opacity: 0;
+        }
+        .bar > .ico {
+          font-size: 48px;
+          color: #15121a;
         }
         .q {
+          flex: 1;
           font-weight: 700;
-          font-size: 46px;
-          letter-spacing: -0.01em;
+          font-size: 42px;
+          letter-spacing: -0.015em;
           color: #15121a;
           white-space: nowrap;
         }
         .caret {
           display: inline-block;
           width: 4px;
-          height: 46px;
-          margin-left: 4px;
+          height: 44px;
+          margin-left: 3px;
           vertical-align: -8px;
           background: #15121a;
           border-radius: 2px;
         }
+        .bar .appi {
+          --s: 76px;
+          border-radius: 50%;
+        }
+        .bar .appi .ico {
+          font-size: 40px;
+        }
         .row {
           position: absolute;
-          left: 120px;
-          width: 840px;
-          height: 96px;
+          left: 110px;
+          width: 860px;
+          height: 104px;
           display: flex;
           align-items: center;
-          padding-left: 124px;
+          gap: 22px;
+          padding: 0 30px 0 16px;
           box-sizing: border-box;
+          border-radius: 26px;
           opacity: 0;
         }
-        .row .itile {
-          width: 72px;
-          height: 72px;
-          margin-top: -36px;
-          border-radius: 20px;
-          left: 14px;
+        .row .appi {
+          --s: 72px;
+          font-style: italic;
+          font-weight: 900;
+          font-stretch: 122%;
+          font-size: 38px;
+          padding-right: 3px;
+          box-sizing: border-box;
+          text-shadow: 0 0 14px rgba(246, 249, 127, 0.5);
         }
-        .row .itile .tnum {
-          font-size: 44px;
+        .row .rt {
+          display: flex;
+          flex-direction: column;
+          gap: 4px;
         }
-        .row .ctext {
-          font-size: 46px;
+        .row .nm {
+          font-weight: 800;
+          font-size: 40px;
+          letter-spacing: -0.02em;
+          color: #15121a;
+        }
+        .row .st {
+          display: flex;
+          gap: 2px;
+        }
+        .row .st .ico {
+          font-size: 24px;
+          color: #f2b705;
+        }
+        .row .up {
+          margin-left: auto;
+          width: 58px;
+          height: 58px;
+          border-radius: 50%;
+          background: #eef8f1;
+          color: #1f9d55;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+        .row .up .ico {
+          font-size: 36px;
         }
       </style>
 
       <div id="root" data-composition-id="search" data-width="1080" data-height="1920">
         <div class="bar wcard" id="bar">
-          <span class="mag"></span>
+          <div class="halo" id="bhalo"></div>
+          <i class="ico" data-layout-allow-overlap>&#xef7a;</i>
           <span class="q"><span id="typed"></span><span class="caret" id="caret"></span></span>
+          <div class="appi lemon" id="go"><i class="ico" data-layout-allow-overlap>&#xe2db;</i></div>
           <div class="shine" id="bsh"></div>
         </div>
         <div id="rows"></div>
@@ -287,24 +418,30 @@
 
       <script>
         (function () {
-          const C = {"inAt": 0.58, "rows": [1.42, 1.76, 2.04], "typeAt": 2.46, "typeDur": 0.3, "outAt": 3.12};
+          const C = {"inAt": 0.36, "query": "study abroad consultant", "typeAt": 0.62, "typeDur": 0.62, "rows": [1.42, 1.76, 2.04], "star": "<i class=\"ico\" data-layout-allow-overlap>&#xf09a;</i>", "upIcon": "<i class=\"ico\" data-layout-allow-overlap>&#xe8e5;</i>", "google": 2.46, "outAt": 3.12};
           const tl = gsap.timeline({ paused: true });
-          tl.fromTo("#bar", { opacity: 0, y: 40, scale: 0.94 }, { opacity: 1, y: 0, scale: 1, duration: 0.4, ease: "back.out(1.5)" }, C.inAt);
-          tl.fromTo("#caret", { opacity: 1 }, { opacity: 0, duration: 0.01, repeat: 5, yoyo: true, repeatDelay: 0.26, ease: "none" }, C.inAt + 0.3);
+          tl.fromTo("#bar", { opacity: 0, y: 40, scale: 0.94 }, { opacity: 1, y: 0, scale: 1, duration: 0.42, ease: "back.out(1.5)" }, C.inAt);
+          tl.fromTo("#go", { scale: 0.3, rotation: -30 }, { scale: 1, rotation: 0, duration: 0.36, ease: "back.out(2.2)" }, C.inAt + 0.12);
+          const Q = C.query, typed = document.getElementById("typed"), n = { v: 0 };
+          tl.fromTo(n, { v: 0 }, { v: Q.length, duration: C.typeDur, ease: "none", onUpdate: () => (typed.textContent = Q.slice(0, Math.round(n.v))) }, C.typeAt);
+          tl.fromTo("#caret", { opacity: 1 }, { opacity: 0, duration: 0.01, repeat: 5, yoyo: true, repeatDelay: 0.24, ease: "none" }, C.typeAt + C.typeDur + 0.08);
+          tl.to("#go", { keyframes: [{ scale: 0.86, duration: 0.07 }, { scale: 1, duration: 0.18 }], ease: "power2.out" }, C.typeAt + C.typeDur + 0.04);
+
           const rows = document.getElementById("rows");
           C.rows.forEach((t, i) => {
             const el = document.createElement("div");
             el.className = "row wcard";
             el.id = "r" + i;
-            el.style.top = 850 + 104 + 14 + i * (96 + 12) + "px";
-            el.innerHTML = '<div class="itile ltile"><span class="tnum">' + (i + 1) + '</span></div><span class="ctext">Competitor</span><div class="shine" id="sh' + i + '"></div>';
+            el.style.top = 842 + 108 + 16 + i * (104 + 12) + "px";
+            el.innerHTML =
+              '<div class="appi">' + (i + 1) + '</div><div class="rt"><span class="nm">Competitor</span><span class="st">' + C.star.repeat(5) + "</span></div>" +
+              '<span class="up">' + C.upIcon + '</span><div class="shine" id="sh' + i + '"></div>';
             rows.appendChild(el);
-            tl.fromTo(el, { opacity: 0, y: -30, scale: 0.96 }, { opacity: 1, y: 0, scale: 1, duration: 0.32, ease: "back.out(1.6)" }, t);
+            tl.fromTo(el, { opacity: 0, y: -34, scale: 0.95 }, { opacity: 1, y: 0, scale: 1, duration: 0.36, ease: "back.out(1.6)" }, t);
             tl.fromTo("#sh" + i, { "--sx": "-140%" }, { "--sx": "360%", duration: 0.55, ease: "power2.inOut" }, t + 0.14);
           });
-          const WORD = "Google", typed = document.getElementById("typed"), n = { v: 0 };
-          tl.fromTo(n, { v: 0 }, { v: WORD.length, duration: C.typeDur, ease: "none", onUpdate: () => (typed.textContent = WORD.slice(0, Math.round(n.v))) }, C.typeAt);
-          tl.fromTo("#bsh", { "--sx": "-140%" }, { "--sx": "360%", duration: 0.6, ease: "power2.inOut" }, C.typeAt + C.typeDur);
+          tl.to("#bhalo", { opacity: 1, duration: 0.24, ease: "power2.out" }, C.google);
+          tl.fromTo("#bsh", { "--sx": "-140%" }, { "--sx": "360%", duration: 0.6, ease: "power2.inOut" }, C.google);
           tl.to(["#bar", "#rows"], { opacity: 0, y: 24, duration: 0.2, ease: "power2.in" }, C.outAt);
           window.__timelines["search"] = tl;
         })();
