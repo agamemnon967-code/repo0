@@ -84,7 +84,7 @@
         background: var(--white);
         opacity: 0;
       }
-      /* Blurred-footage scenes: static blur plate + cool navy tint, faded in/out per scene. */
+      /* Blurred-footage scenes: blur plate + neutral dim, faded in/out per scene. */
       .sbg {
         position: absolute;
         inset: 0;
@@ -101,9 +101,7 @@
       .sdim {
         position: absolute;
         inset: 0;
-        background:
-          radial-gradient(ellipse 80% 55% at 50% 45%, rgba(20, 32, 90, 0.35), rgba(6, 9, 26, 0.7)),
-          linear-gradient(180deg, rgba(8, 12, 32, 0.35), rgba(8, 12, 32, 0.55));
+        background: rgba(12, 12, 14, 0.42);
       }
       /* Darkens desk/hands under the captions (applies above the cutout). */
       #scrim {

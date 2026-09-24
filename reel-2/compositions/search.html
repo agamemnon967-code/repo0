@@ -21,93 +21,29 @@
           font-stretch: 62% 125%;
           font-style: italic;
         }
+        /* Icons: Material Symbols Rounded, subset to tools/icons.json. Outline (wght 300) for
+           editorial use, filled for app-style glyphs. */
+        @font-face {
+          font-family: "Icons";
+          src: url("assets/fonts/Icons-Outline.woff2") format("woff2");
+        }
+        @font-face {
+          font-family: "IconsF";
+          src: url("assets/fonts/Icons-Rounded-Filled.woff2") format("woff2");
+        }
         #root {
           position: absolute;
           inset: 0;
           overflow: hidden;
           pointer-events: none;
           font-family: "Archivo", sans-serif;
+          font-stretch: 100%;
+          -webkit-font-smoothing: antialiased;
         }
-        /* One soft light pass across a surface after it lands. */
-        .shine {
-          position: absolute;
-          inset: 0;
-          border-radius: inherit;
-          overflow: hidden;
-        }
-        .shine::before {
-          content: "";
-          position: absolute;
-          top: -20%;
-          bottom: -20%;
-          left: 0;
-          width: 38%;
-          background: linear-gradient(100deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0));
-          transform: translateX(var(--sx, -140%)) skewX(-12deg);
-        }
-
-        /* Marks built from two rounded bars (no SVG). */
-        .xmark,
-        .tick {
-          position: relative;
-          display: block;
-          flex: none;
-          width: 64px;
-          height: 64px;
-          border-radius: 50%;
-        }
-        .xmark {
-          background: linear-gradient(180deg, #ff6b7c, #e0223b);
-          box-shadow: 0 0 22px rgba(255, 77, 97, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.35);
-        }
-        .xmark::before,
-        .xmark::after {
-          content: "";
-          position: absolute;
-          left: 50%;
-          top: 50%;
-          width: 30px;
-          height: 7px;
-          margin: -3.5px 0 0 -15px;
-          border-radius: 4px;
-          background: #ffffff;
-          transform: rotate(45deg);
-        }
-        .xmark::after {
-          transform: rotate(-45deg);
-        }
-        .tick {
-          background: linear-gradient(180deg, #8ff8e4, #22c9aa);
-          box-shadow: 0 0 24px rgba(52, 224, 195, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.5);
-        }
-        .tick::before {
-          content: "";
-          position: absolute;
-          left: 20px;
-          top: 13px;
-          width: 14px;
-          height: 27px;
-          border-right: 7px solid #05241e;
-          border-bottom: 7px solid #05241e;
-          border-radius: 0 0 4px 0;
-          transform: rotate(40deg);
-        }
-        .ctext {
-          font-weight: 800;
-          font-size: 52px;
-          letter-spacing: -0.02em;
-          color: #f4f7ff;
-          white-space: nowrap;
-        }
-        /* ---------- v3 kit: cool palette chosen against the warm room ----------
-           Room = cream walls, rose blazer, wood, white tee. Deep navy glass, electric blue, mint
-           (positive) and coral (negative) all sit opposite those hues, so every panel separates. */
-        @font-face {
-          font-family: "Icons";
-          src: url("assets/fonts/Icons-Rounded-Filled.woff2") format("woff2");
-          font-weight: normal;
-          font-style: normal;
-        }
+        /* ---------- v4 editorial kit ----------
+           Flat colour only: no gradients, glows, blobs or glossy tiles. Four colours:
+           ink #111113, paper #F3F1EC, white, cobalt #2B4CFF (one accent); signal red #F2382E for
+           negatives only. Depth comes from one realistic shadow and 1px hairlines. */
         .ico {
           display: block;
           font-family: "Icons";
@@ -115,297 +51,206 @@
           font-weight: normal;
           line-height: 1;
           letter-spacing: 0;
-          -webkit-font-smoothing: antialiased;
         }
-        /* Navy glass panel */
-        .ncard {
-          border-radius: 30px;
-          background: linear-gradient(180deg, #1d2858 0%, #131b40 60%, #0f1634 100%);
+        .ico.f {
+          font-family: "IconsF";
+        }
+        /* White UI surface over footage. */
+        .sheet {
+          background: #ffffff;
+          border-radius: 24px;
           box-shadow:
-            inset 0 1.5px 0 rgba(255, 255, 255, 0.16),
-            inset 0 0 0 1.5px rgba(150, 175, 255, 0.16),
-            0 34px 64px -16px rgba(4, 6, 18, 0.72),
-            0 10px 22px -6px rgba(4, 6, 18, 0.42);
-          color: #f4f7ff;
+            0 0 0 1px rgba(17, 17, 19, 0.06),
+            0 28px 50px -24px rgba(0, 0, 0, 0.55),
+            0 6px 14px -6px rgba(0, 0, 0, 0.18);
+          color: #111113;
         }
-        /* App-icon tile: glossy squircle. Default electric blue with a white glyph. */
-        .appi {
-          position: relative;
+        /* Full-bleed solid grounds for cutaways. */
+        .ground {
+          position: absolute;
+          inset: 0;
+        }
+        .ground.paper {
+          background: #f3f1ec;
+        }
+        .ground.ink {
+          background: #111113;
+        }
+        .ground.cobalt {
+          background: #2b4cff;
+        }
+        /* Editorial type */
+        .hed {
+          font-weight: 800;
+          letter-spacing: -0.045em;
+          line-height: 0.92;
+          white-space: nowrap;
+        }
+        .label {
+          font-weight: 600;
+          font-size: 26px;
+          letter-spacing: 0.14em;
+          text-transform: uppercase;
+          white-space: nowrap;
+        }
+        .rule {
+          position: absolute;
+          height: 2px;
+          transform-origin: left center;
+        }
+        /* Flat round icon chip */
+        .chip {
           flex: none;
           display: flex;
           align-items: center;
           justify-content: center;
-          width: var(--s, 88px);
-          height: var(--s, 88px);
-          border-radius: 30%;
-          background: linear-gradient(160deg, #7aa3ff 0%, #3d6bff 52%, #2547d6 100%);
-          box-shadow:
-            inset 0 1.5px 0 rgba(255, 255, 255, 0.45),
-            inset 0 -4px 8px rgba(10, 20, 90, 0.35),
-            0 0 28px rgba(61, 107, 255, 0.5),
-            0 10px 22px rgba(4, 6, 18, 0.4);
-          color: #ffffff;
-        }
-        .appi::after {
-          content: "";
-          position: absolute;
-          inset: 0;
-          border-radius: inherit;
-          background: linear-gradient(180deg, rgba(255, 255, 255, 0.22) 0%, rgba(255, 255, 255, 0) 52%);
-          pointer-events: none;
-        }
-        .appi .ico {
-          font-size: calc(var(--s, 88px) * 0.54);
-        }
-        .appi.mint {
-          background: linear-gradient(160deg, #8ff8e4 0%, #34e0c3 52%, #16b394 100%);
-          box-shadow:
-            inset 0 1.5px 0 rgba(255, 255, 255, 0.6),
-            inset 0 -4px 8px rgba(0, 70, 55, 0.3),
-            0 0 30px rgba(52, 224, 195, 0.5),
-            0 10px 22px rgba(4, 6, 18, 0.4);
-          color: #05241e;
-        }
-        .appi.red {
-          background: linear-gradient(160deg, #ff8b97 0%, #ff4d61 52%, #d92640 100%);
-          box-shadow:
-            inset 0 1.5px 0 rgba(255, 255, 255, 0.45),
-            inset 0 -4px 8px rgba(90, 0, 15, 0.3),
-            0 0 28px rgba(255, 77, 97, 0.45),
-            0 10px 22px rgba(4, 6, 18, 0.4);
-          color: #ffffff;
-        }
-        .appi.mute {
-          background: linear-gradient(160deg, #2e3862 0%, #1e2748 100%);
-          box-shadow:
-            inset 0 1.5px 0 rgba(255, 255, 255, 0.1),
-            inset 0 0 0 1.5px rgba(150, 175, 255, 0.1);
-          color: #5d6890;
-        }
-        .appi.over {
-          position: absolute;
-          left: 0;
-          top: 0;
-          opacity: 0;
-        }
-        /* Ring + bloom around a panel; fade via opacity. */
-        .halo {
-          position: absolute;
-          inset: 0;
-          border-radius: inherit;
-          pointer-events: none;
-          opacity: 0;
-          box-shadow:
-            0 0 0 2.5px rgba(122, 163, 255, 0.95),
-            0 0 50px rgba(61, 107, 255, 0.55);
-        }
-        .halo.mint {
-          box-shadow:
-            0 0 0 2.5px rgba(110, 245, 220, 0.95),
-            0 0 50px rgba(52, 224, 195, 0.5);
-        }
-        .halo.red {
-          box-shadow:
-            0 0 0 2.5px rgba(255, 110, 125, 0.95),
-            0 0 50px rgba(255, 77, 97, 0.5);
-        }
-        /* Full-screen cutaway ground: deep navy, soft blue light, faint dot grid. */
-        .screen {
-          position: absolute;
-          inset: 0;
-          overflow: hidden;
-          background: radial-gradient(ellipse 95% 60% at 50% 36%, #1c2b6a 0%, #0e1433 55%, #070a1a 100%);
-        }
-        .screen .grid {
-          position: absolute;
-          inset: 0;
-          background-image: radial-gradient(rgba(160, 185, 255, 0.16) 1.6px, transparent 1.8px);
-          background-size: 44px 44px;
-          -webkit-mask-image: radial-gradient(ellipse 70% 55% at 50% 45%, #000 20%, transparent 80%);
-          mask-image: radial-gradient(ellipse 70% 55% at 50% 45%, #000 20%, transparent 80%);
-        }
-        .screen .blob {
-          position: absolute;
-          width: 900px;
-          height: 900px;
+          width: var(--s, 84px);
+          height: var(--s, 84px);
           border-radius: 50%;
-          background: radial-gradient(circle, rgba(61, 107, 255, 0.42) 0%, rgba(61, 107, 255, 0) 65%);
+          background: #eef1ff;
+          color: #2b4cff;
         }
-        .screen .blob.m {
-          background: radial-gradient(circle, rgba(52, 224, 195, 0.22) 0%, rgba(52, 224, 195, 0) 65%);
+        .chip .ico {
+          font-size: calc(var(--s, 84px) * 0.5);
         }
-        /* Display type for cutaways */
-        .disp {
-          font-style: italic;
-          font-weight: 900;
-          font-stretch: 122%;
-          text-transform: uppercase;
-          line-height: 0.98;
-          letter-spacing: -0.01em;
+        /* iOS-style app icon: flat colour squircle, white filled glyph. */
+        .app {
+          flex: none;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: var(--s, 72px);
+          height: var(--s, 72px);
+          border-radius: 23%;
           color: #ffffff;
-          white-space: nowrap;
         }
-        /* Gradient type: put .bt on the animated span itself so background-clip follows its transform. */
-        .bt {
-          background: linear-gradient(180deg, #e6eeff 0%, #a9c3ff 45%, #6e97ff 100%);
-          -webkit-background-clip: text;
-          background-clip: text;
-          -webkit-text-fill-color: transparent;
-          filter: drop-shadow(0 0 22px rgba(61, 107, 255, 0.45));
-        }
-        .eyebrow {
-          font-weight: 800;
-          font-size: 30px;
-          letter-spacing: 0.22em;
-          text-transform: uppercase;
-          color: #8e9cc8;
-          white-space: nowrap;
+        .app .ico {
+          font-size: calc(var(--s, 72px) * 0.56);
         }
         /* Blurred-footage scene (index.html). "…your competitors are already showing up on Google":
-           a white search bar types what her clients would search, navy ranked competitor results drop
-           in on "already showing up", and the bar glows blue on "Google". */
+           a search bar types what her clients search; competitor results fill page one, row by row,
+           on "already showing up". */
         .bar {
           position: absolute;
           left: 110px;
-          top: 760px;
+          top: 720px;
           width: 860px;
           height: 108px;
           display: flex;
           align-items: center;
           gap: 20px;
-          padding: 0 18px 0 34px;
+          padding: 0 16px 0 34px;
           box-sizing: border-box;
           border-radius: 54px;
-          background: linear-gradient(180deg, #ffffff, #f1f4fb);
-          box-shadow:
-            inset 0 1.5px 0 #ffffff,
-            0 30px 60px -16px rgba(4, 6, 18, 0.7),
-            0 8px 18px -4px rgba(4, 6, 18, 0.35);
           opacity: 0;
         }
         .bar > .ico {
-          font-size: 48px;
-          color: #3d6bff;
+          font-size: 44px;
+          color: #6e6e74;
         }
         .q {
           flex: 1;
-          font-weight: 700;
-          font-size: 42px;
-          letter-spacing: -0.015em;
-          color: #0f1634;
+          font-weight: 500;
+          font-size: 40px;
+          letter-spacing: -0.02em;
+          color: #111113;
           white-space: nowrap;
         }
         .caret {
           display: inline-block;
-          width: 4px;
-          height: 44px;
-          margin-left: 3px;
+          width: 3px;
+          height: 42px;
+          margin-left: 2px;
           vertical-align: -8px;
-          background: #3d6bff;
-          border-radius: 2px;
+          background: #2b4cff;
         }
-        .bar .appi {
+        .go {
           --s: 76px;
-          border-radius: 50%;
+          background: #f2f2f4;
+          color: #111113;
         }
-        .bar .appi .ico {
-          font-size: 40px;
+        .res {
+          position: absolute;
+          left: 110px;
+          top: 848px;
+          width: 860px;
+          height: 396px;
+          overflow: hidden;
+          clip-path: inset(0% 0% 100% 0% round 24px);
         }
         .row {
           position: absolute;
-          left: 110px;
-          width: 860px;
-          height: 104px;
+          left: 36px;
+          right: 36px;
+          height: 132px;
           display: flex;
           align-items: center;
-          gap: 22px;
-          padding: 0 30px 0 16px;
-          box-sizing: border-box;
-          border-radius: 26px;
+          gap: 24px;
           opacity: 0;
         }
-        .row .appi {
-          --s: 72px;
-          font-style: italic;
-          font-weight: 900;
-          font-stretch: 122%;
-          font-size: 38px;
-          padding-right: 3px;
-          box-sizing: border-box;
+        .row + .row {
+          border-top: 1px solid #ecebe8;
         }
-        .row .rt {
-          display: flex;
-          flex-direction: column;
-          gap: 4px;
+        .fav {
+          --s: 64px;
+          background: #f2f2f4;
+          color: #55555b;
+          font-weight: 700;
+          font-size: 28px;
+        }
+        .row .u {
+          font-weight: 500;
+          font-size: 24px;
+          color: #6e6e74;
         }
         .row .nm {
-          font-weight: 800;
+          margin-top: 4px;
+          font-weight: 700;
           font-size: 40px;
-          letter-spacing: -0.02em;
-          color: #ffffff;
+          letter-spacing: -0.03em;
+          color: #1a3bd6;
         }
-        .row .st {
-          display: flex;
-          gap: 2px;
-        }
-        .row .st .ico {
-          font-size: 24px;
-          color: #ffc53d;
-        }
-        .row .up {
+        .row .rk {
           margin-left: auto;
-          width: 58px;
-          height: 58px;
-          border-radius: 50%;
-          background: rgba(52, 224, 195, 0.16);
-          color: #6ff3dc;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-        }
-        .row .up .ico {
-          font-size: 36px;
+          font-weight: 700;
+          font-size: 30px;
+          color: #8c8c92;
+          font-variant-numeric: tabular-nums;
         }
       </style>
 
       <div id="root" data-composition-id="search" data-width="1080" data-height="1920">
-        <div class="bar" id="bar">
-          <div class="halo" id="bhalo"></div>
-          <i class="ico" data-layout-allow-overlap>&#xef7a;</i>
+        <div class="bar sheet" id="bar">
+          <i class="ico">&#xef7a;</i>
           <span class="q"><span id="typed"></span><span class="caret" id="caret"></span></span>
-          <div class="appi" id="go"><i class="ico" data-layout-allow-overlap>&#xe2db;</i></div>
-          <div class="shine" id="bsh"></div>
+          <div class="chip go" id="go"><i class="ico">&#xe5c8;</i></div>
         </div>
-        <div id="rows"></div>
+        <div class="res sheet" id="res"></div>
       </div>
 
       <script>
         (function () {
-          const C = {"inAt": 0.36, "query": "study abroad consultant", "typeAt": 0.62, "typeDur": 0.62, "rows": [1.42, 1.76, 2.04], "star": "<i class=\"ico\" data-layout-allow-overlap>&#xf09a;</i>", "upIcon": "<i class=\"ico\" data-layout-allow-overlap>&#xe8e5;</i>", "google": 2.46, "outAt": 3.12};
+          const C = {"inAt": 0.36, "query": "study abroad consultant near me", "typeAt": 0.62, "typeDur": 0.7, "rows": [1.42, 1.76, 2.04], "outAt": 3.12};
           const tl = gsap.timeline({ paused: true });
-          tl.fromTo("#bar", { opacity: 0, y: 40, scale: 0.94 }, { opacity: 1, y: 0, scale: 1, duration: 0.42, ease: "back.out(1.5)" }, C.inAt);
-          tl.fromTo("#go", { scale: 0.3, rotation: -30 }, { scale: 1, rotation: 0, duration: 0.36, ease: "back.out(2.2)" }, C.inAt + 0.12);
+          tl.fromTo("#bar", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.45, ease: "expo.out" }, C.inAt);
           const Q = C.query, typed = document.getElementById("typed"), n = { v: 0 };
           tl.to(n, { v: Q.length, duration: C.typeDur, ease: "none", onUpdate: () => (typed.textContent = Q.slice(0, Math.round(n.v))) }, C.typeAt);
-          tl.fromTo("#caret", { opacity: 1 }, { opacity: 0, duration: 0.01, repeat: 5, yoyo: true, repeatDelay: 0.24, ease: "none" }, C.typeAt + C.typeDur + 0.08);
-          tl.to("#go", { keyframes: [{ scale: 0.86, duration: 0.07 }, { scale: 1, duration: 0.18 }], ease: "power2.out" }, C.typeAt + C.typeDur + 0.04);
+          tl.fromTo("#caret", { opacity: 1 }, { opacity: 0, duration: 0.01, repeat: 5, yoyo: true, repeatDelay: 0.22, ease: "none" }, C.typeAt + C.typeDur + 0.08);
+          tl.to("#go", { backgroundColor: "#2b4cff", color: "#ffffff", duration: 0.2 }, C.typeAt + C.typeDur + 0.04);
 
-          const rows = document.getElementById("rows");
+          const res = document.getElementById("res");
           C.rows.forEach((t, i) => {
             const el = document.createElement("div");
-            el.className = "row ncard";
+            el.className = "row";
             el.id = "r" + i;
-            el.style.top = 760 + 108 + 16 + i * (104 + 12) + "px";
-            el.innerHTML =
-              '<div class="appi">' + (i + 1) + '</div><div class="rt"><span class="nm">Competitor</span><span class="st">' + C.star.repeat(5) + "</span></div>" +
-              '<span class="up">' + C.upIcon + '</span><div class="shine" id="sh' + i + '"></div>';
-            rows.appendChild(el);
-            tl.fromTo(el, { opacity: 0, y: -34, scale: 0.95 }, { opacity: 1, y: 0, scale: 1, duration: 0.36, ease: "back.out(1.6)" }, t);
-            tl.fromTo("#sh" + i, { "--sx": "-140%" }, { "--sx": "360%", duration: 0.55, ease: "power2.inOut" }, t + 0.14);
+            el.style.top = i * 132 + "px";
+            el.innerHTML = '<div class="chip fav">C</div><div><div class="u">competitor' + (i + 1) + '.in</div><div class="nm">Competitor</div></div><span class="rk">' + (i + 1) + "</span>";
+            res.appendChild(el);
+            const bottom = 100 - (((i + 1) * 132) / 396) * 100;
+            tl.to("#res", { clipPath: "inset(0% 0% " + Math.max(0, bottom).toFixed(2) + "% 0% round 24px)", duration: 0.42, ease: "expo.out" }, t - 0.04);
+            tl.fromTo(el, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.4, ease: "expo.out" }, t);
           });
-          tl.to("#bhalo", { opacity: 1, duration: 0.24, ease: "power2.out" }, C.google);
-          tl.fromTo("#bsh", { "--sx": "-140%" }, { "--sx": "360%", duration: 0.6, ease: "power2.inOut" }, C.google);
-          tl.to(["#bar", "#rows"], { opacity: 0, y: 24, duration: 0.2, ease: "power2.in" }, C.outAt);
+          tl.to(["#bar", "#res"], { opacity: 0, y: 20, duration: 0.2, ease: "power2.in" }, C.outAt);
           window.__timelines["search"] = tl;
         })();
       </script>

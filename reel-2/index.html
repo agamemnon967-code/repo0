@@ -84,7 +84,7 @@
         background: var(--white);
         opacity: 0;
       }
-      /* Blurred-footage scenes: static blur plate + cool navy tint, faded in/out per scene. */
+      /* Blurred-footage scenes: blur plate + neutral dim, faded in/out per scene. */
       .sbg {
         position: absolute;
         inset: 0;
@@ -101,9 +101,7 @@
       .sdim {
         position: absolute;
         inset: 0;
-        background:
-          radial-gradient(ellipse 80% 55% at 50% 45%, rgba(20, 32, 90, 0.35), rgba(6, 9, 26, 0.7)),
-          linear-gradient(180deg, rgba(8, 12, 32, 0.35), rgba(8, 12, 32, 0.55));
+        background: rgba(12, 12, 14, 0.42);
       }
       /* Darkens desk/hands under the captions (applies above the cutout). */
       #scrim {
@@ -143,10 +141,8 @@
           <video id="bw-1" class="clip" src="assets/media/bw.mp4" muted playsinline data-start="22.44" data-media-start="25.3" data-duration="2.4" data-track-index="2"></video>
         </div>
         <div class="layer" id="blur-wrap">
-          <video id="blur-0" class="clip" src="assets/media/blur.mp4" muted playsinline data-start="3.64" data-media-start="3.9" data-duration="1.2" data-track-index="3"></video>
-          <video id="blur-1" class="clip" src="assets/media/blur.mp4" muted playsinline data-start="8.16" data-media-start="9.4" data-duration="1.4" data-track-index="3"></video>
-          <video id="blur-2" class="clip" src="assets/media/blur.mp4" muted playsinline data-start="20.68" data-media-start="22.9" data-duration="1.08" data-track-index="3"></video>
-          <video id="blur-3" class="clip" src="assets/media/blur.mp4" muted playsinline data-start="21.76" data-media-start="24.62" data-duration="0.88" data-track-index="3"></video>
+          <video id="blur-0" class="clip" src="assets/media/blur.mp4" muted playsinline data-start="20.68" data-media-start="22.9" data-duration="1.08" data-track-index="3"></video>
+          <video id="blur-1" class="clip" src="assets/media/blur.mp4" muted playsinline data-start="21.76" data-media-start="24.62" data-duration="0.88" data-track-index="3"></video>
         </div>
       </div>
       <!-- Blurred-footage scene backgrounds -->
@@ -183,7 +179,7 @@
         <div id="phone" data-composition-id="phone" data-composition-src="compositions/phone.html" data-start="5.46" data-duration="1.84" data-track-index="4" data-width="1080" data-height="1920"></div>
       </div>
       <div id="brand-slot" style="position: absolute; inset: 0">
-        <div id="brand" data-composition-id="brand" data-composition-src="compositions/brand.html" data-start="9.2" data-duration="1.56" data-track-index="4" data-width="1080" data-height="1920"></div>
+        <div id="brand" data-composition-id="brand" data-composition-src="compositions/brand.html" data-start="8.98" data-duration="1.78" data-track-index="4" data-width="1080" data-height="1920"></div>
       </div>
       <div id="who-slot" style="position: absolute; inset: 0">
         <div id="who" data-composition-id="who" data-composition-src="compositions/who.html" data-start="10.76" data-duration="4.38" data-track-index="4" data-width="1080" data-height="1920"></div>
@@ -236,10 +232,6 @@
         tl.set("#bw-wrap", { opacity: 0 }, o(6.1));               // colour back on the cut
         tl.set("#red-flag", { opacity: 1 }, o(7.92));             // "…NOTHING." red backdrop
         tl.to("#red-flag", { opacity: 0, duration: 0.2, ease: "power2.in" }, o(8.46) - 0.2);
-        tl.set("#blur-wrap", { opacity: 1 }, o(4.66));             // site cutaway exits into blur, which clears on her
-        tl.to("#blur-wrap", { opacity: 0, duration: 0.26, ease: "power2.out" }, o(4.8));
-        tl.to("#blur-wrap", { opacity: 1, duration: 0.2, ease: "power2.in" }, o(10.24));   // zoom-blur into the brand cutaway
-        tl.set("#blur-wrap", { opacity: 0 }, o(10.7));
         tl.to("#blur-wrap", { opacity: 1, duration: 0.26, ease: "power2.in" }, o(23.7));   // blur through the cut
         tl.to("#blur-wrap", { opacity: 0, duration: 0.14, ease: "power2.out" }, o(24.62) + 0.02);
         tl.set("#bw-wrap", { opacity: 1 }, o(25.88));             // "isn't working" -> B&W

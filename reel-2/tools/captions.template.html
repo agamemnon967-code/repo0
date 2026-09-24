@@ -25,7 +25,7 @@
       :root {
         --night: #0e0b10;
         --white: #fbfbf6;
-        --lime: #7fa3ff;
+        --lime: #8ea2ff;
         --alarm: #ff2e3f;
       }
       #root {
@@ -64,7 +64,7 @@
          one tight dark shadow for lift. No deep extrusion, no glow.
          ::before  tight drop shadow layer, behind
          face      solid tone colour (what contrast checks read)
-         ::after   vertical bevel gradient + optional light pass (--shine), clipped to the glyphs */
+         ::after   flat fill clipped to the glyphs (v4: no bevel, no light pass) */
       .w {
         position: relative;
         isolation: isolate;
@@ -80,7 +80,7 @@
         line-height: 1.04;
         transform-origin: 50% 70%;
         --shine: -40%;
-        --fill: linear-gradient(180deg, #ffffff 0%, #ffffff 48%, #e3e5ea 62%, #c7cad3 100%);
+        --fill: linear-gradient(#ffffff, #ffffff);
         --sh: rgba(8, 6, 10, 0.72);
         color: #fbfbf6;
       }
@@ -117,15 +117,15 @@
         color: transparent;
         text-shadow: none;
       }
-      /* Accent tone ("lime" key kept for the build data): electric blue, picked to contrast the warm room. */
+      /* Accent tone ("lime" key kept for the build data): flat cobalt tint, matching the scene accent. */
       .w.lime {
-        color: #8fb0ff;
-        --fill: linear-gradient(180deg, #eef3ff 0%, #b7ccff 42%, #7fa3ff 62%, #5a86ff 100%);
-        --sh: rgba(4, 8, 30, 0.82);
+        color: #8ea2ff;
+        --fill: linear-gradient(#8ea2ff, #8ea2ff);
+        --sh: rgba(4, 6, 20, 0.8);
       }
       .w.red {
-        color: #ff3344;
-        --fill: linear-gradient(180deg, #ff8a95 0%, #ff4a58 45%, #ec1c2f 62%, #c20f22 100%);
+        color: #ff4d42;
+        --fill: linear-gradient(#ff4d42, #ff4d42);
         --sh: rgba(22, 4, 6, 0.8);
       }
       /* Lemon tile badge (same object as the scene tiles). */
@@ -249,7 +249,6 @@
           buildGroup(g, gi);
           const el = "#cg-" + gi;
           tl.set(el, { opacity: 1, visibility: "visible" }, o(g.start));
-          (g.hero || []).forEach((i) => shine("#w-" + i, o(wi(i)) + 0.3, 0.7));
           g.l1.forEach((i) => (wi(i) < 0.9 ? tl.set("#w-" + i, { opacity: 1 }, 0) : ghostIn("#w-" + i, o(wi(i)) - LEAD)));
           g.l2.flat().forEach((i) => {
             if (g.count) {

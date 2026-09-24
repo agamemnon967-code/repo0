@@ -72,10 +72,6 @@ MOMENTS = """
         tl.set("#bw-wrap", { opacity: 0 }, o(6.1));               // colour back on the cut
         tl.set("#red-flag", { opacity: 1 }, o(7.92));             // "…NOTHING." red backdrop
         tl.to("#red-flag", { opacity: 0, duration: 0.2, ease: "power2.in" }, o(8.46) - 0.2);
-        tl.set("#blur-wrap", { opacity: 1 }, o(4.66));             // site cutaway exits into blur, which clears on her
-        tl.to("#blur-wrap", { opacity: 0, duration: 0.26, ease: "power2.out" }, o(4.8));
-        tl.to("#blur-wrap", { opacity: 1, duration: 0.2, ease: "power2.in" }, o(10.24));   // zoom-blur into the brand cutaway
-        tl.set("#blur-wrap", { opacity: 0 }, o(10.7));
         tl.to("#blur-wrap", { opacity: 1, duration: 0.26, ease: "power2.in" }, o(23.7));   // blur through the cut
         tl.to("#blur-wrap", { opacity: 0, duration: 0.14, ease: "power2.out" }, o(24.62) + 0.02);
         tl.set("#bw-wrap", { opacity: 1 }, o(25.88));             // "isn't working" -> B&W
@@ -146,43 +142,46 @@ def G_(name):
 
 
 def I(name):
-    # Icon glyphs sit in stacked state tiles (base + cross-faded overlay) by design.
-    return '<i class="ico" data-layout-allow-overlap>%s</i>' % G_(name)
+    """Outline icon glyph."""
+    return '<i class="ico">%s</i>' % G_(name)
+
+
+def F(name):
+    """Filled icon glyph."""
+    return '<i class="ico f">%s</i>' % G_(name)
 
 
 HOSTS = [
     # (host id, template, source start, source end, CFG in LOCAL seconds)
-    # overlay -> full-screen cutaway on the jump cut -> zoom back to her for "doing nothing"
+    # overlay -> paper cutaway wipes up on the jump cut -> wipes off to her for "doing nothing"
     ("site", "site.html", 1.6, 4.9, dict(
-        inAt=L(1.64, 1.6), typeAt=L(1.76, 1.6), typeDur=0.56, cut=L(2.64, 1.6), eb=L(2.76, 1.6),
-        words=[L(3.88, 1.6), L(4.08, 1.6), L(4.22, 1.6), L(4.58, 1.6)], daysAt=L(3.3, 1.6), out=L(4.74, 1.6))),
+        inAt=L(1.64, 1.6), typeAt=L(1.76, 1.6), typeDur=0.56, cut=L(2.64, 1.6), bh=[L(2.76, 1.6), L(2.92, 1.6)],
+        words=[L(3.88, 1.6), L(4.08, 1.6), L(4.22, 1.6), L(4.58, 1.6)], footAt=L(3.2, 1.6), out=L(4.74, 1.6))),
     # blurred footage + phone lock screen
     ("phone", "phone.html", 6.1, 7.94, dict(
         inAt=0.0, n=[L(6.22, 6.1) - 0.06, L(7.06, 6.1) - 0.06], clear=L(7.62, 6.1), off=L(7.86, 6.1), outAt=L(7.92, 6.1))),
-    # full-screen cutaway (footage zoom-blurs into it)
-    ("brand", "brand.html", 10.44, 12.0, dict(kick=[0.04, 0.1], mono=0.16, name=L(10.9, 10.44), name2=L(11.44, 10.44), dur=L(12.0, 10.44))),
+    # flat cobalt cutaway, wipes up over the push-in on "why"
+    ("brand", "brand.html", 10.22, 12.0, dict(kick=[L(10.44, 10.22), L(10.5, 10.22)], mono=L(10.56, 10.22), name=L(10.9, 10.22), name2=L(11.44, 10.22))),
     # overlay on sharp footage
-    ("who", "slabs.html", 12.58, 16.96, dict(
-        top=880, h=124, gap=14, outAt=L(16.78, 12.58),
-        lead=dict(y=1296, words=["We", "help"], at=[L(12.72, 12.58), L(12.88, 12.58)]),
-        slabs=[dict(text="Immigration consultants", at=L(13.14, 12.58), icon=I("flight_takeoff"), halo="blue", haloOff=L(14.7, 12.58)),
-               dict(text="Study abroad agencies", at=L(14.74, 12.58), icon=I("school"), halo="blue", haloOff=L(16.2, 12.58)),
-               dict(text="Clinics", at=L(16.22, 12.58), icon=I("medical_services"), halo="blue")])),
+    ("who", "who.html", 12.58, 16.96, dict(
+        inAt=L(12.66, 12.58), lead=[L(12.72, 12.58), L(12.88, 12.58)], outAt=L(16.78, 12.58),
+        rows=[dict(text="Immigration consultants", at=L(13.14, 12.58), icon=I("flight_takeoff")),
+              dict(text="Study abroad agencies", at=L(14.74, 12.58), icon=I("school")),
+              dict(text="Clinics", at=L(16.22, 12.58), icon=I("medical_services"))])),
     # blurred footage
     ("found", "found.html", 16.96, 20.44, dict(
-        found=L(17.64, 16.96) - 0.12, online=L(17.98, 16.96), icon=I("person_add"),
+        inAt=L(17.36, 16.96), found=L(17.64, 16.96) - 0.1, online=L(17.98, 16.96), icon=F("person_add"),
         toasts=[L(19.46, 16.96) - 0.08, L(19.8, 16.96) - 0.06, L(20.1, 16.96) - 0.06], outAt=L(20.28, 16.96))),
-    # full-screen typographic cutaway, zoom-through exit into the blur transition
+    # flat ink cutaway (hard cut in), wipes off into the blur transition
     ("nofluff", "nofluff.html", 20.84, 23.98, dict(
-        rows=[dict(at=L(20.94, 20.84) - 0.06, x=L(21.5, 20.84)), dict(at=L(21.86, 20.84) - 0.06, x=L(22.4, 20.84))],
-        res=L(22.7, 20.84) - 0.08, tick=L(23.12, 20.84), out=L(23.84, 20.84))),
+        at=[L(20.94, 20.84), L(21.86, 20.84), L(22.7, 20.84)], x=[L(21.5, 20.84), L(22.4, 20.84)],
+        tick=L(23.12, 20.84), out=L(23.84, 20.84))),
     # overlay on sharp footage (B&W moment)
     ("status", "status.html", 24.62, 28.56, dict(inAt=L(24.9, 24.62), bad=L(25.9, 24.62), good=L(27.62, 24.62), outAt=L(28.36, 24.62))),
     # blurred footage
     ("search", "search.html", 28.84, 32.2, dict(
-        inAt=L(29.2, 28.84), query="study abroad consultant", typeAt=L(29.46, 28.84), typeDur=0.62,
-        rows=[L(30.26, 28.84), L(30.6, 28.84), L(30.88, 28.84)], star=I("star"), upIcon=I("trending_up"),
-        google=L(31.34, 28.84) - 0.04, outAt=L(31.96, 28.84))),
+        inAt=L(29.2, 28.84), query="study abroad consultant near me", typeAt=L(29.46, 28.84), typeDur=0.7,
+        rows=[L(30.26, 28.84), L(30.6, 28.84), L(30.88, 28.84)], outAt=L(31.96, 28.84))),
 ]
 
 # Blurred-footage scenes (source s): (id, window start, window end, fade-in at, fade-in dur, fade-out at, fade-out dur)
@@ -217,7 +216,7 @@ def scene_bg_moments():
 # well before their moment (the wrap's opacity gates them): sub-second clips fail the render's
 # frame-coverage gate.
 BW = [(4.4, 5.72), (25.3, 27.7)]
-BLUR = [(3.9, 5.1), (9.4, 10.8), (22.9, 23.98), (24.62, 25.5)]
+BLUR = [(22.9, 23.98), (24.62, 25.5)]
 RED = (7.3, 8.46)  # red backdrop behind the subject cutout
 
 
@@ -234,7 +233,8 @@ def render_scene(hid, tpl, cfg, text=None):
     for k, v in rep.items():
         S = S.replace(k, v)
     S = re.sub(r"\{\{I:([a-z_]+)\}\}", lambda m: I(m.group(1)), S)
-    S = re.sub(r"\{\{G:([a-z_]+)\}\}", lambda m: G_(m.group(1)), S)
+    S = re.sub(r"\{\{F:([a-z_]+)\}\}", lambda m: F(m.group(1)), S)
+    S = re.sub(r"\{\{CP:([a-z_]+)\}\}", lambda m: ICONS[m.group(1)], S)
     assert "{{" not in S, (tpl, S[S.index("{{"):S.index("{{") + 40])
     open(os.path.join(ROOT, "compositions", hid + ".html"), "w").write(S)
 

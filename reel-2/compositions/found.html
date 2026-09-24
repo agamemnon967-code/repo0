@@ -21,93 +21,29 @@
           font-stretch: 62% 125%;
           font-style: italic;
         }
+        /* Icons: Material Symbols Rounded, subset to tools/icons.json. Outline (wght 300) for
+           editorial use, filled for app-style glyphs. */
+        @font-face {
+          font-family: "Icons";
+          src: url("assets/fonts/Icons-Outline.woff2") format("woff2");
+        }
+        @font-face {
+          font-family: "IconsF";
+          src: url("assets/fonts/Icons-Rounded-Filled.woff2") format("woff2");
+        }
         #root {
           position: absolute;
           inset: 0;
           overflow: hidden;
           pointer-events: none;
           font-family: "Archivo", sans-serif;
+          font-stretch: 100%;
+          -webkit-font-smoothing: antialiased;
         }
-        /* One soft light pass across a surface after it lands. */
-        .shine {
-          position: absolute;
-          inset: 0;
-          border-radius: inherit;
-          overflow: hidden;
-        }
-        .shine::before {
-          content: "";
-          position: absolute;
-          top: -20%;
-          bottom: -20%;
-          left: 0;
-          width: 38%;
-          background: linear-gradient(100deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0));
-          transform: translateX(var(--sx, -140%)) skewX(-12deg);
-        }
-
-        /* Marks built from two rounded bars (no SVG). */
-        .xmark,
-        .tick {
-          position: relative;
-          display: block;
-          flex: none;
-          width: 64px;
-          height: 64px;
-          border-radius: 50%;
-        }
-        .xmark {
-          background: linear-gradient(180deg, #ff6b7c, #e0223b);
-          box-shadow: 0 0 22px rgba(255, 77, 97, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.35);
-        }
-        .xmark::before,
-        .xmark::after {
-          content: "";
-          position: absolute;
-          left: 50%;
-          top: 50%;
-          width: 30px;
-          height: 7px;
-          margin: -3.5px 0 0 -15px;
-          border-radius: 4px;
-          background: #ffffff;
-          transform: rotate(45deg);
-        }
-        .xmark::after {
-          transform: rotate(-45deg);
-        }
-        .tick {
-          background: linear-gradient(180deg, #8ff8e4, #22c9aa);
-          box-shadow: 0 0 24px rgba(52, 224, 195, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.5);
-        }
-        .tick::before {
-          content: "";
-          position: absolute;
-          left: 20px;
-          top: 13px;
-          width: 14px;
-          height: 27px;
-          border-right: 7px solid #05241e;
-          border-bottom: 7px solid #05241e;
-          border-radius: 0 0 4px 0;
-          transform: rotate(40deg);
-        }
-        .ctext {
-          font-weight: 800;
-          font-size: 52px;
-          letter-spacing: -0.02em;
-          color: #f4f7ff;
-          white-space: nowrap;
-        }
-        /* ---------- v3 kit: cool palette chosen against the warm room ----------
-           Room = cream walls, rose blazer, wood, white tee. Deep navy glass, electric blue, mint
-           (positive) and coral (negative) all sit opposite those hues, so every panel separates. */
-        @font-face {
-          font-family: "Icons";
-          src: url("assets/fonts/Icons-Rounded-Filled.woff2") format("woff2");
-          font-weight: normal;
-          font-style: normal;
-        }
+        /* ---------- v4 editorial kit ----------
+           Flat colour only: no gradients, glows, blobs or glossy tiles. Four colours:
+           ink #111113, paper #F3F1EC, white, cobalt #2B4CFF (one accent); signal red #F2382E for
+           negatives only. Depth comes from one realistic shadow and 1px hairlines. */
         .ico {
           display: block;
           font-family: "Icons";
@@ -115,303 +51,266 @@
           font-weight: normal;
           line-height: 1;
           letter-spacing: 0;
-          -webkit-font-smoothing: antialiased;
         }
-        /* Navy glass panel */
-        .ncard {
-          border-radius: 30px;
-          background: linear-gradient(180deg, #1d2858 0%, #131b40 60%, #0f1634 100%);
+        .ico.f {
+          font-family: "IconsF";
+        }
+        /* White UI surface over footage. */
+        .sheet {
+          background: #ffffff;
+          border-radius: 24px;
           box-shadow:
-            inset 0 1.5px 0 rgba(255, 255, 255, 0.16),
-            inset 0 0 0 1.5px rgba(150, 175, 255, 0.16),
-            0 34px 64px -16px rgba(4, 6, 18, 0.72),
-            0 10px 22px -6px rgba(4, 6, 18, 0.42);
-          color: #f4f7ff;
+            0 0 0 1px rgba(17, 17, 19, 0.06),
+            0 28px 50px -24px rgba(0, 0, 0, 0.55),
+            0 6px 14px -6px rgba(0, 0, 0, 0.18);
+          color: #111113;
         }
-        /* App-icon tile: glossy squircle. Default electric blue with a white glyph. */
-        .appi {
-          position: relative;
+        /* Full-bleed solid grounds for cutaways. */
+        .ground {
+          position: absolute;
+          inset: 0;
+        }
+        .ground.paper {
+          background: #f3f1ec;
+        }
+        .ground.ink {
+          background: #111113;
+        }
+        .ground.cobalt {
+          background: #2b4cff;
+        }
+        /* Editorial type */
+        .hed {
+          font-weight: 800;
+          letter-spacing: -0.045em;
+          line-height: 0.92;
+          white-space: nowrap;
+        }
+        .label {
+          font-weight: 600;
+          font-size: 26px;
+          letter-spacing: 0.14em;
+          text-transform: uppercase;
+          white-space: nowrap;
+        }
+        .rule {
+          position: absolute;
+          height: 2px;
+          transform-origin: left center;
+        }
+        /* Flat round icon chip */
+        .chip {
           flex: none;
           display: flex;
           align-items: center;
           justify-content: center;
-          width: var(--s, 88px);
-          height: var(--s, 88px);
-          border-radius: 30%;
-          background: linear-gradient(160deg, #7aa3ff 0%, #3d6bff 52%, #2547d6 100%);
-          box-shadow:
-            inset 0 1.5px 0 rgba(255, 255, 255, 0.45),
-            inset 0 -4px 8px rgba(10, 20, 90, 0.35),
-            0 0 28px rgba(61, 107, 255, 0.5),
-            0 10px 22px rgba(4, 6, 18, 0.4);
+          width: var(--s, 84px);
+          height: var(--s, 84px);
+          border-radius: 50%;
+          background: #eef1ff;
+          color: #2b4cff;
+        }
+        .chip .ico {
+          font-size: calc(var(--s, 84px) * 0.5);
+        }
+        /* iOS-style app icon: flat colour squircle, white filled glyph. */
+        .app {
+          flex: none;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: var(--s, 72px);
+          height: var(--s, 72px);
+          border-radius: 23%;
           color: #ffffff;
         }
-        .appi::after {
-          content: "";
+        .app .ico {
+          font-size: calc(var(--s, 72px) * 0.56);
+        }
+        /* Blurred-footage scene (index.html). "…actually get found online": a local search sheet;
+           "Your business" sits third, greyed, then climbs to the top and gets the Top result tag.
+           "…and get clients from it": iOS-style notifications stack under the sheet, one per beat. */
+        .sh {
           position: absolute;
-          inset: 0;
-          border-radius: inherit;
-          background: linear-gradient(180deg, rgba(255, 255, 255, 0.22) 0%, rgba(255, 255, 255, 0) 52%);
-          pointer-events: none;
+          left: 110px;
+          top: 560px;
+          width: 860px;
+          height: 486px;
+          overflow: hidden;
+          opacity: 0;
         }
-        .appi .ico {
-          font-size: calc(var(--s, 88px) * 0.54);
+        .hd {
+          position: absolute;
+          left: 36px;
+          right: 36px;
+          top: 0;
+          height: 96px;
+          display: flex;
+          align-items: center;
+          gap: 16px;
+          border-bottom: 1px solid #ecebe8;
+          font-weight: 500;
+          font-size: 32px;
+          color: #55555b;
         }
-        .appi.mint {
-          background: linear-gradient(160deg, #8ff8e4 0%, #34e0c3 52%, #16b394 100%);
-          box-shadow:
-            inset 0 1.5px 0 rgba(255, 255, 255, 0.6),
-            inset 0 -4px 8px rgba(0, 70, 55, 0.3),
-            0 0 30px rgba(52, 224, 195, 0.5),
-            0 10px 22px rgba(4, 6, 18, 0.4);
-          color: #05241e;
+        .hd .ico {
+          font-size: 36px;
+          color: #2b4cff;
         }
-        .appi.red {
-          background: linear-gradient(160deg, #ff8b97 0%, #ff4d61 52%, #d92640 100%);
-          box-shadow:
-            inset 0 1.5px 0 rgba(255, 255, 255, 0.45),
-            inset 0 -4px 8px rgba(90, 0, 15, 0.3),
-            0 0 28px rgba(255, 77, 97, 0.45),
-            0 10px 22px rgba(4, 6, 18, 0.4);
+        .row {
+          position: absolute;
+          left: 0;
+          right: 0;
+          top: 96px;
+          height: 130px;
+          display: flex;
+          align-items: center;
+          gap: 26px;
+          padding: 0 36px;
+          box-sizing: border-box;
+          background: #ffffff;
+        }
+        .row .rk {
+          width: 40px;
+          font-weight: 700;
+          font-size: 34px;
+          color: #8c8c92;
+          font-variant-numeric: tabular-nums;
+        }
+        .row .pin {
+          --s: 76px;
+          background: #f2f2f4;
+          color: #77777d;
+        }
+        .row .nm {
+          font-weight: 700;
+          font-size: 42px;
+          letter-spacing: -0.03em;
+          color: #111113;
+        }
+        .row .sub {
+          display: flex;
+          align-items: center;
+          gap: 6px;
+          font-weight: 500;
+          font-size: 26px;
+          color: #6e6e74;
+          margin-top: 6px;
+        }
+        .row .sub .ico {
+          font-size: 26px;
+          color: #e3a300;
+        }
+        .row.gray .nm {
+          color: #77777d;
+        }
+        .row.me .nm {
+          color: #77777d;
+        }
+        .tag {
+          margin-left: auto;
+          height: 52px;
+          padding: 0 20px;
+          border-radius: 26px;
+          background: #2b4cff;
           color: #ffffff;
+          display: flex;
+          align-items: center;
+          font-weight: 700;
+          font-size: 24px;
+          letter-spacing: 0.06em;
+          text-transform: uppercase;
+          opacity: 0;
         }
-        .appi.mute {
-          background: linear-gradient(160deg, #2e3862 0%, #1e2748 100%);
-          box-shadow:
-            inset 0 1.5px 0 rgba(255, 255, 255, 0.1),
-            inset 0 0 0 1.5px rgba(150, 175, 255, 0.1);
-          color: #5d6890;
-        }
-        .appi.over {
+        .row.me::after {
+          content: "";
           position: absolute;
           left: 0;
           top: 0;
-          opacity: 0;
-        }
-        /* Ring + bloom around a panel; fade via opacity. */
-        .halo {
-          position: absolute;
-          inset: 0;
-          border-radius: inherit;
-          pointer-events: none;
-          opacity: 0;
-          box-shadow:
-            0 0 0 2.5px rgba(122, 163, 255, 0.95),
-            0 0 50px rgba(61, 107, 255, 0.55);
-        }
-        .halo.mint {
-          box-shadow:
-            0 0 0 2.5px rgba(110, 245, 220, 0.95),
-            0 0 50px rgba(52, 224, 195, 0.5);
-        }
-        .halo.red {
-          box-shadow:
-            0 0 0 2.5px rgba(255, 110, 125, 0.95),
-            0 0 50px rgba(255, 77, 97, 0.5);
-        }
-        /* Full-screen cutaway ground: deep navy, soft blue light, faint dot grid. */
-        .screen {
-          position: absolute;
-          inset: 0;
-          overflow: hidden;
-          background: radial-gradient(ellipse 95% 60% at 50% 36%, #1c2b6a 0%, #0e1433 55%, #070a1a 100%);
-        }
-        .screen .grid {
-          position: absolute;
-          inset: 0;
-          background-image: radial-gradient(rgba(160, 185, 255, 0.16) 1.6px, transparent 1.8px);
-          background-size: 44px 44px;
-          -webkit-mask-image: radial-gradient(ellipse 70% 55% at 50% 45%, #000 20%, transparent 80%);
-          mask-image: radial-gradient(ellipse 70% 55% at 50% 45%, #000 20%, transparent 80%);
-        }
-        .screen .blob {
-          position: absolute;
-          width: 900px;
-          height: 900px;
-          border-radius: 50%;
-          background: radial-gradient(circle, rgba(61, 107, 255, 0.42) 0%, rgba(61, 107, 255, 0) 65%);
-        }
-        .screen .blob.m {
-          background: radial-gradient(circle, rgba(52, 224, 195, 0.22) 0%, rgba(52, 224, 195, 0) 65%);
-        }
-        /* Display type for cutaways */
-        .disp {
-          font-style: italic;
-          font-weight: 900;
-          font-stretch: 122%;
-          text-transform: uppercase;
-          line-height: 0.98;
-          letter-spacing: -0.01em;
-          color: #ffffff;
-          white-space: nowrap;
-        }
-        /* Gradient type: put .bt on the animated span itself so background-clip follows its transform. */
-        .bt {
-          background: linear-gradient(180deg, #e6eeff 0%, #a9c3ff 45%, #6e97ff 100%);
-          -webkit-background-clip: text;
-          background-clip: text;
-          -webkit-text-fill-color: transparent;
-          filter: drop-shadow(0 0 22px rgba(61, 107, 255, 0.45));
-        }
-        .eyebrow {
-          font-weight: 800;
-          font-size: 30px;
-          letter-spacing: 0.22em;
-          text-transform: uppercase;
-          color: #8e9cc8;
-          white-space: nowrap;
-        }
-        /* Blurred-footage scene (index.html). "…actually get found online": a navy result card rises
-           to #1, the pin drops with a ripple, stars fill and the card lights up. "…and get clients
-           from it": white notification toasts stack under it, one per beat. */
-        .res {
-          position: absolute;
-          left: 110px;
-          top: 760px;
-          width: 860px;
-          height: 176px;
-          display: flex;
-          align-items: center;
-          gap: 28px;
-          padding: 0 30px 0 34px;
-          box-sizing: border-box;
-          opacity: 0;
-        }
-        .pinwrap {
-          position: relative;
-          width: 108px;
-          height: 108px;
-          flex: none;
-        }
-        .pinwrap .appi {
-          --s: 108px;
-        }
-        .ripple {
-          position: absolute;
-          inset: 0;
-          border-radius: 30%;
-          border: 4px solid rgba(122, 163, 255, 0.95);
-          opacity: 0;
-        }
-        .meta {
-          flex: 1;
-          display: flex;
-          flex-direction: column;
-          gap: 10px;
-        }
-        .rname {
-          font-weight: 800;
-          font-size: 48px;
-          letter-spacing: -0.02em;
-          color: #ffffff;
-          white-space: nowrap;
-        }
-        .stars {
-          display: flex;
-          gap: 4px;
-          align-items: center;
-        }
-        .stars .ico {
-          font-size: 36px;
-          color: #ffc53d;
-          opacity: 0;
-        }
-        .stars .tag {
-          margin-left: 14px;
-          padding: 5px 14px;
-          border-radius: 10px;
-          background: rgba(52, 224, 195, 0.16);
-          color: #6ff3dc;
-          font-weight: 800;
-          font-size: 22px;
-          letter-spacing: 0.08em;
-          opacity: 0;
-        }
-        .rank {
-          --s: 118px;
-          font-style: italic;
-          font-weight: 900;
-          font-stretch: 122%;
-          font-size: 56px;
-          padding-right: 4px;
-          box-sizing: border-box;
-          opacity: 0;
+          bottom: 0;
+          width: 6px;
+          background: #2b4cff;
+          opacity: var(--mk, 0);
         }
         .toast {
           position: absolute;
           left: 150px;
           width: 780px;
-          height: 84px;
+          height: 86px;
           display: flex;
           align-items: center;
-          gap: 20px;
-          padding: 0 28px 0 14px;
+          gap: 18px;
+          padding: 0 26px 0 12px;
           box-sizing: border-box;
           border-radius: 26px;
-          background: linear-gradient(180deg, #ffffff, #eef2fb);
-          box-shadow:
-            inset 0 1.5px 0 #ffffff,
-            0 24px 48px -14px rgba(4, 6, 18, 0.6),
-            0 6px 14px -4px rgba(4, 6, 18, 0.3);
           opacity: 0;
         }
-        .toast .appi {
-          --s: 60px;
+        .toast .app {
+          --s: 62px;
+          background: #2b4cff;
         }
         .toast .tt {
-          font-weight: 800;
-          font-size: 36px;
-          letter-spacing: -0.01em;
-          color: #0f1634;
+          font-weight: 700;
+          font-size: 32px;
+          letter-spacing: -0.02em;
+        }
+        .toast .ds {
+          font-weight: 500;
+          font-size: 28px;
+          color: #6e6e74;
+          margin-left: 6px;
         }
         .toast .now {
           margin-left: auto;
-          font-weight: 600;
-          font-size: 26px;
-          color: #7a86ad;
+          font-weight: 500;
+          font-size: 24px;
+          color: #77777d;
         }
       </style>
 
       <div id="root" data-composition-id="found" data-width="1080" data-height="1920">
-        <div class="res ncard" id="res">
-          <div class="halo" id="rhalo"></div>
-          <div class="pinwrap"><i class="ripple" id="rp1"></i><i class="ripple" id="rp2"></i><div class="appi" id="pin"><i class="ico" data-layout-allow-overlap>&#xf1db;</i></div></div>
-          <div class="meta">
-            <div class="rname">Your business</div>
-            <div class="stars"><i class="ico" data-layout-allow-overlap>&#xf09a;</i><i class="ico" data-layout-allow-overlap>&#xf09a;</i><i class="ico" data-layout-allow-overlap>&#xf09a;</i><i class="ico" data-layout-allow-overlap>&#xf09a;</i><i class="ico" data-layout-allow-overlap>&#xf09a;</i><span class="tag" id="tag">TOP RESULT</span></div>
-          </div>
-          <div class="rank appi mint" id="rank">#1</div>
-          <div class="shine" id="rsh"></div>
+        <div class="sh sheet" id="sh">
+          <div class="hd"><i class="ico">&#xef7a;</i><span>Consultants near me</span></div>
+          <div class="row gray" id="c1"><span class="rk" id="k1">1</span><div class="chip pin"><i class="ico f">&#xf1db;</i></div><div><div class="nm">Competitor</div><div class="sub"><i class="ico f">&#xf09a;</i> 4.2</div></div></div>
+          <div class="row gray" id="c2"><span class="rk" id="k2">2</span><div class="chip pin"><i class="ico f">&#xf1db;</i></div><div><div class="nm">Competitor</div><div class="sub"><i class="ico f">&#xf09a;</i> 4.0</div></div></div>
+          <div class="row me" id="me"><span class="rk" id="km">3</span><div class="chip pin" id="mp"><i class="ico f">&#xf1db;</i></div><div><div class="nm" id="mn">Your business</div><div class="sub"><i class="ico f">&#xf09a;</i> 4.9</div></div><span class="tag" id="tag">Top result</span></div>
         </div>
         <div id="toasts"></div>
       </div>
 
       <script>
         (function () {
-          const C = {"found": 0.56, "online": 1.02, "icon": "<i class=\"ico\" data-layout-allow-overlap>&#xea4d;</i>", "toasts": [2.42, 2.78, 3.08], "outAt": 3.32};
+          const C = {"inAt": 0.4, "found": 0.5800000000000001, "online": 1.02, "icon": "<i class=\"ico f\">&#xea4d;</i>", "toasts": [2.42, 2.78, 3.08], "outAt": 3.32};
           const tl = gsap.timeline({ paused: true });
-          // Rises from lower in the list and settles at the top.
-          tl.fromTo("#res", { opacity: 0, y: 150, scale: 0.94 }, { opacity: 1, y: 0, scale: 1, duration: 0.55, ease: "expo.out" }, C.found);
-          tl.fromTo("#pin", { y: -70, scale: 0.6, opacity: 0 }, { y: 0, scale: 1, opacity: 1, duration: 0.42, ease: "bounce.out" }, C.found + 0.12);
-          tl.fromTo("#rp1", { scale: 1, opacity: 0.9 }, { scale: 1.7, opacity: 0, duration: 0.6, ease: "power2.out" }, C.found + 0.42);
-          tl.fromTo("#rp2", { scale: 1, opacity: 0.7 }, { scale: 1.7, opacity: 0, duration: 0.6, ease: "power2.out" }, C.found + 0.62);
-          tl.fromTo(".stars .ico", { opacity: 0, scale: 0.3 }, { opacity: 1, scale: 1, duration: 0.24, ease: "back.out(2.6)", stagger: 0.05 }, C.found + 0.3);
-          tl.fromTo("#rank", { opacity: 0, scale: 0.4, rotation: -14 }, { opacity: 1, scale: 1, rotation: 0, duration: 0.4, ease: "back.out(2.2)" }, C.online);
-          tl.fromTo("#tag", { opacity: 0, x: -14 }, { opacity: 1, x: 0, duration: 0.26, ease: "power3.out" }, C.online + 0.14);
-          tl.to("#rhalo", { opacity: 1, duration: 0.3, ease: "power2.out" }, C.online + 0.1);
-          tl.fromTo("#rsh", { "--sx": "-140%" }, { "--sx": "360%", duration: 0.7, ease: "power2.inOut" }, C.online + 0.14);
+          const H = 130;
+          tl.set("#c2", { y: H }, 0);
+          tl.set("#me", { y: 2 * H }, 0);
+          tl.fromTo("#sh", { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.45, ease: "expo.out" }, C.inAt);
+          // "found": climbs from 3rd to 1st; the others step down.
+          tl.to("#me", { y: 0, duration: 0.6, ease: "expo.inOut" }, C.found);
+          tl.to("#c1", { y: H, duration: 0.6, ease: "expo.inOut" }, C.found);
+          tl.to("#c2", { y: 2 * H, duration: 0.6, ease: "expo.inOut" }, C.found);
+          // Rank digits swap mid-move; driven by a proxy so seeking either way lands correctly.
+          const ks = [["km", "3", "1"], ["k1", "1", "2"], ["k2", "2", "3"]].map(([id, a, b]) => [document.getElementById(id), a, b]);
+          const sw = { v: 0 };
+          tl.fromTo(sw, { v: 0 }, { v: 1, duration: 0.04, ease: "none", onUpdate: () => ks.forEach(([el, a, b]) => (el.textContent = sw.v >= 0.5 ? b : a)) }, C.found + 0.28);
+          tl.to("#mn", { color: "#111113", duration: 0.3 }, C.found + 0.2);
+          tl.to("#km", { color: "#2b4cff", duration: 0.3 }, C.found + 0.2);
+          tl.to("#mp", { backgroundColor: "#2b4cff", color: "#ffffff", duration: 0.3 }, C.found + 0.3);
+          tl.to("#me", { "--mk": 1, duration: 0.2 }, C.online);
+          tl.fromTo("#tag", { opacity: 0, x: 16 }, { opacity: 1, x: 0, duration: 0.36, ease: "expo.out" }, C.online);
 
           const host = document.getElementById("toasts");
           C.toasts.forEach((t, i) => {
             const el = document.createElement("div");
-            el.className = "toast";
+            el.className = "toast sheet";
             el.id = "tt" + i;
-            el.style.top = 954 + i * 96 + "px";
-            el.innerHTML = '<div class="appi mint">' + C.icon + '</div><span class="tt">New client</span><span class="now">now</span>';
+            el.style.top = 1072 + i * 100 + "px";
+            el.innerHTML = '<div class="app">' + C.icon + '</div><span class="tt">New client</span><span class="ds">enquiry received</span><span class="now">now</span>';
             host.appendChild(el);
-            tl.fromTo(el, { opacity: 0, y: -40, scale: 0.92 }, { opacity: 1, y: 0, scale: 1, duration: 0.38, ease: "back.out(1.7)" }, t);
+            tl.fromTo(el, { opacity: 0, y: -24, scale: 0.97 }, { opacity: 1, y: 0, scale: 1, duration: 0.4, ease: "expo.out" }, t);
           });
-          tl.to(["#res", "#toasts"], { opacity: 0, y: 24, duration: 0.18, ease: "power2.in" }, C.outAt);
+          tl.to(["#sh", "#toasts"], { opacity: 0, y: 20, duration: 0.2, ease: "power2.in" }, C.outAt);
           window.__timelines["found"] = tl;
         })();
       </script>

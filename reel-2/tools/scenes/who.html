@@ -7,126 +7,7 @@
   <body>
     <template>
       <style>
-        @font-face {
-          font-family: "Archivo";
-          src: url("assets/fonts/Archivo-Variable.woff2") format("woff2");
-          font-weight: 100 900;
-          font-stretch: 62% 125%;
-          font-style: normal;
-        }
-        @font-face {
-          font-family: "Archivo";
-          src: url("assets/fonts/Archivo-Italic-Variable.woff2") format("woff2");
-          font-weight: 100 900;
-          font-stretch: 62% 125%;
-          font-style: italic;
-        }
-        /* Icons: Material Symbols Rounded, subset to tools/icons.json. Outline (wght 300) for
-           editorial use, filled for app-style glyphs. */
-        @font-face {
-          font-family: "Icons";
-          src: url("assets/fonts/Icons-Outline.woff2") format("woff2");
-        }
-        @font-face {
-          font-family: "IconsF";
-          src: url("assets/fonts/Icons-Rounded-Filled.woff2") format("woff2");
-        }
-        #root {
-          position: absolute;
-          inset: 0;
-          overflow: hidden;
-          pointer-events: none;
-          font-family: "Archivo", sans-serif;
-          font-stretch: 100%;
-          -webkit-font-smoothing: antialiased;
-        }
-        /* ---------- v4 editorial kit ----------
-           Flat colour only: no gradients, glows, blobs or glossy tiles. Four colours:
-           ink #111113, paper #F3F1EC, white, cobalt #2B4CFF (one accent); signal red #F2382E for
-           negatives only. Depth comes from one realistic shadow and 1px hairlines. */
-        .ico {
-          display: block;
-          font-family: "Icons";
-          font-style: normal;
-          font-weight: normal;
-          line-height: 1;
-          letter-spacing: 0;
-        }
-        .ico.f {
-          font-family: "IconsF";
-        }
-        /* White UI surface over footage. */
-        .sheet {
-          background: #ffffff;
-          border-radius: 24px;
-          box-shadow:
-            0 0 0 1px rgba(17, 17, 19, 0.06),
-            0 28px 50px -24px rgba(0, 0, 0, 0.55),
-            0 6px 14px -6px rgba(0, 0, 0, 0.18);
-          color: #111113;
-        }
-        /* Full-bleed solid grounds for cutaways. */
-        .ground {
-          position: absolute;
-          inset: 0;
-        }
-        .ground.paper {
-          background: #f3f1ec;
-        }
-        .ground.ink {
-          background: #111113;
-        }
-        .ground.cobalt {
-          background: #2b4cff;
-        }
-        /* Editorial type */
-        .hed {
-          font-weight: 800;
-          letter-spacing: -0.045em;
-          line-height: 0.92;
-          white-space: nowrap;
-        }
-        .label {
-          font-weight: 600;
-          font-size: 26px;
-          letter-spacing: 0.14em;
-          text-transform: uppercase;
-          white-space: nowrap;
-        }
-        .rule {
-          position: absolute;
-          height: 2px;
-          transform-origin: left center;
-        }
-        /* Flat round icon chip */
-        .chip {
-          flex: none;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          width: var(--s, 84px);
-          height: var(--s, 84px);
-          border-radius: 50%;
-          background: #eef1ff;
-          color: #2b4cff;
-        }
-        .chip .ico {
-          font-size: calc(var(--s, 84px) * 0.5);
-        }
-        /* iOS-style app icon: flat colour squircle, white filled glyph. */
-        .app {
-          flex: none;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          width: var(--s, 72px);
-          height: var(--s, 72px);
-          border-radius: 23%;
-          color: #ffffff;
-        }
-        .app .ico {
-          font-size: calc(var(--s, 72px) * 0.56);
-        }
+{{BASE_CSS}}
         /* "We help immigration consultants, study abroad agencies, and clinics": one white sheet at
            chest height; a hairline-divided row is revealed per audience as spoken, and a cobalt marker
            follows the line being said. */
@@ -213,7 +94,7 @@
         }
       </style>
 
-      <div id="root" data-composition-id="who" data-width="1080" data-height="1920">
+      <div id="root" data-composition-id="__ID__" data-width="1080" data-height="1920">
         <div class="sh sheet" id="sh">
           <div class="hd"><span class="label" id="lb"><span>We</span><span>help</span></span><span class="n">3 SECTORS</span></div>
           <div id="rows"></div>
@@ -223,7 +104,7 @@
 
       <script>
         (function () {
-          const C = {"inAt": 0.08, "lead": [0.14, 0.3], "outAt": 4.2, "rows": [{"text": "Immigration consultants", "at": 0.56, "icon": "<i class=\"ico\">&#xe905;</i>"}, {"text": "Study abroad agencies", "at": 2.16, "icon": "<i class=\"ico\">&#xe80c;</i>"}, {"text": "Clinics", "at": 3.64, "icon": "<i class=\"ico\">&#xf109;</i>"}]};
+          const C = {{CFG}};
           const tl = gsap.timeline({ paused: true });
           const HD = 104, H = 132;
           tl.to("#sh", { clipPath: "inset(0% 0% " + (100 - (HD / 500) * 100) + "% 0% round 24px)", duration: 0.4, ease: "expo.out" }, C.inAt);
@@ -244,7 +125,7 @@
             if (i > 0) tl.to("#r" + (i - 1) + " .t", { color: "#8a8a90", duration: 0.3 }, r.at);
           });
           tl.to("#sh", { opacity: 0, y: 20, duration: 0.2, ease: "power2.in" }, C.outAt);
-          window.__timelines["who"] = tl;
+          window.__timelines["__ID__"] = tl;
         })();
       </script>
     </template>
