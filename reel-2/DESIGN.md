@@ -4,6 +4,21 @@ Same system as the approved SOP reel (`jazzyease/coursera-test` → `reel-full/D
 `reel/DESIGN.md`): palette, caption finish, card kit and "no AI slop" rules are carried over
 unchanged. What is new here is the scene set and the layout shift for this framing.
 
+## v5: back to her (user feedback on v4)
+
+The full-screen cutaways (paper browser page, cobalt brand screen, ink list) still read as template
+slides. Like the inspo reel, v5 keeps her in every frame:
+
+- **Text behind her** (`DEPTH` in `build.py`): huge condensed Archivo (800, stretch 72%) sits
+  between the backdrop and her cutout (`assets/media/cutout-depth.webm`), so her hair and head
+  occlude the words. The layers live inside `#cam`, so punches and shakes move them with the footage.
+  - "but honestly, it's just sitting there": room dims to 62% ink; HONESTLY, → SITTING → THERE.
+    swap as spoken; the address bar stays in front with a stalled progress rule and a turning reload icon.
+  - "we started Verdexo Ventures": hard cut to a flat cobalt backdrop behind her (the inspo's red
+    backdrop move, in the accent colour); VERDEXO behind her, VENTURES as a caption in front.
+- **No fluff**: the same white sheet as "We help" at chest, a row per phrase, red strike + cross,
+  "Just results" as a solid cobalt row with a check.
+
 ## v4: flat editorial (user feedback on v3: "AI slop")
 
 v3's navy gradient grounds, glowing blobs, dot grids, glossy glowing icon tiles and gradient
@@ -22,7 +37,7 @@ text read as generic AI output. v4 removes that whole language:
 - **Motion:** expo ease, clip-path wipes and masked line rises. No bounces, spins or glints.
 
 Presentation modes (unchanged from v3): overlay on sharp footage, blurred footage (neutral dim),
-full-bleed cutaway with wipes.
+depth (text behind her). Full-bleed cutaways were removed in v5.
 
 Kit (`tools/scenes/_base.css`): `.sheet`, `.ground.paper|ink|cobalt`, `.hed`, `.label`, `.rule`,
 `.chip`, `.app`. Icons: Material Symbols Rounded subsets, outline wght 300 (`{{I:name}}`) and filled
@@ -45,14 +60,14 @@ down ~120px: cards y850–1280, captions block top 1290 (centre ≈ y1455), came
 | Source s | Line | Scene | Type |
 | --- | --- | --- | --- |
 | 0–2.4 | "Most businesses in India have a website" | `site`: Safari address bar over her types `www.yourbusiness.in` | overlay |
-| 2.6–4.8 | "but honestly, it's just sitting there" | `site`: paper screen wipes up on the jump cut; browser window: "But honestly," fills the page, then her line takes over as the headline ("there." in cobalt); "Last visitor N days ago" ticks up | cutaway |
-| 4.8–5.7 | "doing nothing" | paper wipes off upward; B&W + punch on "nothing" | face |
+| 2.6–5.1 | "but honestly, it's just sitting there" | room dims; HONESTLY, / SITTING / THERE. rise behind her head; the address bar stays in front, loading forever | depth |
+| 4.9–5.7 | "doing nothing" | hard cut to B&W + punch on "nothing" | face |
 | 6.1–7.9 | "No leads, no calls, nothing" | `phone`: footage blurs; iPhone on a plain lock screen, Mail / Phone notifications land as spoken, clear to "No notifications", screen off → red backdrop | blurred |
-| 9.1–10.4 | "That's exactly why we" | captions, punch on "why"; cobalt wipes up over the push-in | face |
-| 10.4–12.0 | "started Verdexo Ventures" | `brand`: flat cobalt, white V tile, WE STARTED label + rule, masked rise of Verdexo / Ventures | cutaway |
+| 9.1–10.4 | "That's exactly why we" | captions, punch on "why" | face |
+| 10.4–12.0 | "started Verdexo Ventures" | hard cut to cobalt backdrop behind her; WE STARTED label, VERDEXO behind her head, VENTURES caption in front | depth |
 | 12.6–17.0 | "We help immigration consultants, study abroad agencies, and clinics" | `who`: one white sheet, a row per sector revealed as spoken, cobalt marker follows | overlay |
 | 17.0–20.4 | "get found online and get clients from it" | `found`: local search sheet, "Your business" climbs from 3rd to 1st, Top result tag; "New client" notifications stack | blurred |
-| 20.8–24.0 | "No fluff, no jargon, just results" | `nofluff`: ink screen, numbered list, red strikes, "Just results." in cobalt with a check; wipes into the blur | cutaway |
+| 20.8–24.0 | "No fluff, no jargon, just results" | `nofluff`: white sheet at chest, struck rows with crosses, cobalt "Just results" row with a check; blur transition out | overlay |
 | 24.6–28.6 | "digital presence isn't working… let's fix that" | `status`: white status row: Checking → Isn't working (B&W) → Let's fix that (colour back) | overlay |
 | 28.8–32.0 | "competitors are already showing up on Google" | `search`: query bar types "study abroad consultant near me", competitor results fill page one | blurred |
 | 32.1–33.6 | "The question is, are you?" | captions, jump zoom, push-in through the 1.3s end freeze | face |

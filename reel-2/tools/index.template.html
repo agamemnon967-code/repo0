@@ -74,6 +74,57 @@
         inset: 0;
         background: var(--alarm);
       }
+      /* Text-behind-her moments: backdrop, huge condensed type, then her cutout on top. */
+      .depth {
+        opacity: 0;
+      }
+      .dshade {
+        position: absolute;
+        inset: 0;
+        background: rgba(10, 10, 12, 0.62);
+      }
+      .dbg {
+        position: absolute;
+        inset: 0;
+        background: #2b4cff;
+      }
+      .dword {
+        position: absolute;
+        left: 0;
+        width: 1080px;
+        text-align: center;
+        font-family: "Archivo", sans-serif;
+        font-style: normal;
+        font-weight: 800;
+        font-stretch: 72%;
+        text-transform: uppercase;
+        letter-spacing: -0.02em;
+        line-height: 0.86;
+        white-space: nowrap;
+        color: #ffffff;
+        opacity: 0;
+      }
+      .dword.acc {
+        color: #9fb0ff;
+      }
+      .dlab {
+        position: absolute;
+        left: 0;
+        width: 1080px;
+        text-align: center;
+        font-family: "Archivo", sans-serif;
+        font-weight: 600;
+        font-size: 28px;
+        letter-spacing: 0.3em;
+        text-transform: uppercase;
+        white-space: nowrap;
+        color: rgba(255, 255, 255, 0.78);
+      }
+      .dlab span {
+        display: inline-block;
+        opacity: 0;
+        margin: 0 0.2em;
+      }
       #bw-wrap,
       #blur-wrap {
         opacity: 0;
@@ -129,6 +180,7 @@
           <div class="redbg"></div>
           <video id="cut-flag" class="clip" src="assets/media/cutout-red.webm" muted playsinline data-start="{{RED_START}}" data-media-start="0" data-duration="{{RED_DUR}}" data-track-index="1"></video>
         </div>
+{{DEPTH}}
         <div class="layer" id="bw-wrap">
 {{BW}}
         </div>

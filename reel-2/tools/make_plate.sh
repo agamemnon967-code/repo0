@@ -30,6 +30,9 @@ ffmpeg -loglevel error -y -i prachi2.mp4 -loop 1 -i /tmp/dim.png -c:v libvpx-vp9
 # Cutout for the red backdrop on "…nothing." (source 7.30-8.46; must match RED in build.py).
 ffmpeg -loglevel error -y -c:v libvpx-vp9 -i "$CUT" -ss 7.30 -t 1.16 \
   -c:v libvpx-vp9 -pix_fmt yuva420p -crf 18 -b:v 0 -auto-alt-ref 0 assets/media/cutout-red.webm
+# Cutout for the text-behind-her moments (source 2.40-12.20; must match DEPTH_SRC in build.py).
+ffmpeg -loglevel error -y -c:v libvpx-vp9 -i "$CUT" -ss 2.40 -t 9.8 \
+  -c:v libvpx-vp9 -pix_fmt yuva420p -crf 20 -b:v 0 -auto-alt-ref 0 assets/media/cutout-depth.webm
 # Footage variants, same timebase as the plate: black-and-white and a heavy blur for the transition.
 ffmpeg -loglevel error -y -i assets/media/plate.mp4 -vf "hue=s=0,eq=contrast=1.12:brightness=-0.02" \
   -an -c:v libx264 -crf 18 -preset medium -g 25 -movflags +faststart assets/media/bw.mp4

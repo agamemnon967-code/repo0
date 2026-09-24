@@ -74,6 +74,57 @@
         inset: 0;
         background: var(--alarm);
       }
+      /* Text-behind-her moments: backdrop, huge condensed type, then her cutout on top. */
+      .depth {
+        opacity: 0;
+      }
+      .dshade {
+        position: absolute;
+        inset: 0;
+        background: rgba(10, 10, 12, 0.62);
+      }
+      .dbg {
+        position: absolute;
+        inset: 0;
+        background: #2b4cff;
+      }
+      .dword {
+        position: absolute;
+        left: 0;
+        width: 1080px;
+        text-align: center;
+        font-family: "Archivo", sans-serif;
+        font-style: normal;
+        font-weight: 800;
+        font-stretch: 72%;
+        text-transform: uppercase;
+        letter-spacing: -0.02em;
+        line-height: 0.86;
+        white-space: nowrap;
+        color: #ffffff;
+        opacity: 0;
+      }
+      .dword.acc {
+        color: #9fb0ff;
+      }
+      .dlab {
+        position: absolute;
+        left: 0;
+        width: 1080px;
+        text-align: center;
+        font-family: "Archivo", sans-serif;
+        font-weight: 600;
+        font-size: 28px;
+        letter-spacing: 0.3em;
+        text-transform: uppercase;
+        white-space: nowrap;
+        color: rgba(255, 255, 255, 0.78);
+      }
+      .dlab span {
+        display: inline-block;
+        opacity: 0;
+        margin: 0 0.2em;
+      }
       #bw-wrap,
       #blur-wrap {
         opacity: 0;
@@ -136,6 +187,18 @@
           <div class="redbg"></div>
           <video id="cut-flag" class="clip" src="assets/media/cutout-red.webm" muted playsinline data-start="6.66" data-media-start="0" data-duration="1.16" data-track-index="1"></video>
         </div>
+        <div class="layer depth" id="dp-site">
+          <div class="dshade"></div>
+          <div class="dlab" data-layout-allow-overlap id="dl-site-0" style="top: 120px"><span id="dls-site-0">But</span></div><div class="dlab" data-layout-allow-overlap id="dl-site-1" style="top: 120px"><span id="dls-site-1">It's</span><span id="dls-site-2">just</span></div>
+          <div class="dword" id="dw-site-0" style="top: 210px; font-size: 244px">Honestly,</div><div class="dword" id="dw-site-1" style="top: 172px; font-size: 320px">Sitting</div><div class="dword acc" id="dw-site-2" style="top: 167px; font-size: 330px">There.</div>
+          <video id="dcut-site" class="clip" src="assets/media/cutout-depth.webm" muted playsinline data-start="2.38" data-media-start="0.24" data-duration="2.44" data-track-index="7"></video>
+        </div>
+        <div class="layer depth" id="dp-brand">
+          <div class="dbg"></div>
+          <div class="dlab" data-layout-allow-overlap id="dl-brand-0" style="top: 120px"><span id="dls-brand-0">We</span><span id="dls-brand-1">started</span></div>
+          <div class="dword" id="dw-brand-0" style="top: 211px; font-size: 262px">Verdexo</div>
+          <video id="dcut-brand" class="clip" src="assets/media/cutout-depth.webm" muted playsinline data-start="9.2" data-media-start="8.04" data-duration="1.56" data-track-index="8"></video>
+        </div>
         <div class="layer" id="bw-wrap">
           <video id="bw-0" class="clip" src="assets/media/bw.mp4" muted playsinline data-start="4.14" data-media-start="4.4" data-duration="1.32" data-track-index="2"></video>
           <video id="bw-1" class="clip" src="assets/media/bw.mp4" muted playsinline data-start="22.44" data-media-start="25.3" data-duration="2.4" data-track-index="2"></video>
@@ -173,13 +236,10 @@
 
       <!-- Props: one sub-composition per beat, each inside a single segment -->
       <div id="site-slot" style="position: absolute; inset: 0">
-        <div id="site" data-composition-id="site" data-composition-src="compositions/site.html" data-start="1.6" data-duration="3.04" data-track-index="4" data-width="1080" data-height="1920"></div>
+        <div id="site" data-composition-id="site" data-composition-src="compositions/site.html" data-start="1.6" data-duration="3.22" data-track-index="4" data-width="1080" data-height="1920"></div>
       </div>
       <div id="phone-slot" style="position: absolute; inset: 0">
         <div id="phone" data-composition-id="phone" data-composition-src="compositions/phone.html" data-start="5.46" data-duration="1.84" data-track-index="4" data-width="1080" data-height="1920"></div>
-      </div>
-      <div id="brand-slot" style="position: absolute; inset: 0">
-        <div id="brand" data-composition-id="brand" data-composition-src="compositions/brand.html" data-start="8.98" data-duration="1.78" data-track-index="4" data-width="1080" data-height="1920"></div>
       </div>
       <div id="who-slot" style="position: absolute; inset: 0">
         <div id="who" data-composition-id="who" data-composition-src="compositions/who.html" data-start="10.76" data-duration="4.38" data-track-index="4" data-width="1080" data-height="1920"></div>
@@ -247,10 +307,8 @@
         cam({ scale: 1.07 }, 0.45, 1.25);
         cam({ scale: 1.14 }, 1.74, 0.14, "power3.out");   // "website"
         cam({ scale: 1.18 }, 1.9, 0.48);
-        cam({ scale: 1.0 }, 2.64);                        // cut: but honestly
-        cam({ scale: 1.05 }, 2.64, 2.1);                  // hidden by the site cutaway
-        cam({ scale: 1.14 }, 4.8);                        // back from the cutaway: zoom out onto her
-        cam({ scale: 1.05 }, 4.8, 0.3, "power3.out");
+        cam({ scale: 1.0 }, 2.64);                        // room dims, words behind her: hold wide for headroom
+        cam({ scale: 1.04 }, 2.64, 2.24);
         cam({ scale: 1.16 }, 5.1, 0.14, "power3.out");    // "nothing"
         shake(5.14, 5);
         cam({ scale: 1.2 }, 5.24, 0.48);
@@ -262,8 +320,9 @@
         cam({ scale: 1.1 }, 9.06);                        // cut: that's exactly why
         cam({ scale: 1.12 }, 9.06, 0.5);
         cam({ scale: 1.2 }, 10.04, 0.14, "power3.out");   // "why"
-        cam({ scale: 1.34 }, 10.2, 0.24, "power2.in");    // push into the brand cutaway
-        cam({ scale: 1.02 }, 12.58);                      // cut: we help (brand cutaway covers 10.44-12)
+        cam({ scale: 1.0 }, 10.44);                       // cobalt backdrop, VERDEXO behind her
+        cam({ scale: 1.06 }, 10.44, 1.56);
+        cam({ scale: 1.02 }, 12.58);                      // cut: we help
         cam({ scale: 1.05 }, 12.58, 4.4);
         cam({ scale: 1.1 }, 16.98);                       // jump zoom: actually get found online
         cam({ scale: 1.13 }, 16.98, 2.4);
@@ -293,6 +352,24 @@
         tl.to("#sbg-found", { opacity: 0, duration: 0.16, ease: "power2.in" }, o(20.26));
         tl.to("#sbg-search", { opacity: 1, duration: 0.26, ease: "power2.out" }, o(29.1));
         tl.to("#sbg-search", { opacity: 0, duration: 0.2, ease: "power2.in" }, o(31.96));
+        // ---------- Text behind her ----------
+        tl.set("#dp-site", { opacity: 1 }, o(2.64));
+        tl.fromTo("#dp-site .dshade", { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "power2.out" }, o(2.64));
+        tl.fromTo("#dls-site-0", { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.26, ease: "expo.out" }, o(2.76) - 0.04);
+        tl.fromTo("#dls-site-1", { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.26, ease: "expo.out" }, o(3.88) - 0.04);
+        tl.fromTo("#dls-site-2", { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.26, ease: "expo.out" }, o(4.08) - 0.04);
+        tl.set("#dl-site-0", { opacity: 0 }, o(3.84));
+        tl.fromTo("#dw-site-0", { opacity: 0, yPercent: 26 }, { opacity: 1, yPercent: 0, duration: 0.42, ease: "expo.out" }, o(2.92) - 0.04);
+        tl.set("#dw-site-0", { opacity: 0 }, o(4.2) - 0.04);
+        tl.fromTo("#dw-site-1", { opacity: 0, yPercent: 26 }, { opacity: 1, yPercent: 0, duration: 0.3, ease: "expo.out" }, o(4.2) - 0.04);
+        tl.set("#dw-site-1", { opacity: 0 }, o(4.56) - 0.04);
+        tl.fromTo("#dw-site-2", { opacity: 0, yPercent: 26 }, { opacity: 1, yPercent: 0, duration: 0.42, ease: "expo.out" }, o(4.56) - 0.04);
+        tl.set("#dp-site", { opacity: 0 }, o(5.08));
+        tl.set("#dp-brand", { opacity: 1 }, o(10.44));
+        tl.fromTo("#dls-brand-0", { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.26, ease: "expo.out" }, o(10.44) - 0.04);
+        tl.fromTo("#dls-brand-1", { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.26, ease: "expo.out" }, o(10.5) - 0.04);
+        tl.fromTo("#dw-brand-0", { opacity: 0, yPercent: 26 }, { opacity: 1, yPercent: 0, duration: 0.42, ease: "expo.out" }, o(10.86) - 0.04);
+        tl.set("#dp-brand", { opacity: 0 }, o(12.0));
 
       window.__timelines["main"] = tl;
     </script>

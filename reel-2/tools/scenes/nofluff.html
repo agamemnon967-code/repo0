@@ -8,92 +8,122 @@
     <template>
       <style>
 {{BASE_CSS}}
-        /* "No fluff, no jargon, just results": flat ink screen, hard cut in on the jump cut. Numbered
-           editorial list; each negative is struck with a red rule and greys out as spoken; "Just
-           results." lands in cobalt. Wipes off into the blur transition. */
-        #scr {
+        /* "No fluff, no jargon, just results": the same white sheet as "We help", at chest on sharp
+           footage. A row per phrase as spoken; the first two get a red strike and a cross and grey out;
+           "Just results" lands as a solid cobalt row with a check. Exits into the blur transition. */
+        .sh {
           position: absolute;
-          inset: 0;
-          clip-path: inset(0% 0% 0% 0%);
+          left: 110px;
+          top: 860px;
+          width: 860px;
+          height: 408px;
+          overflow: hidden;
+          clip-path: inset(0% 0% 100% 0% round 24px);
         }
-        .it {
-          position: absolute;
-          left: 100px;
-          right: 100px;
-          height: 220px;
-          border-top: 2px solid #2a2a2e;
-          opacity: 0;
-        }
-        .it .k {
+        .row {
           position: absolute;
           left: 0;
-          top: 28px;
-          color: #6c6c72;
+          right: 0;
+          height: 136px;
+          display: flex;
+          align-items: center;
+          gap: 28px;
+          padding: 0 30px 0 36px;
+          box-sizing: border-box;
+          opacity: 0;
         }
-        .it .t {
+        .row + .row::before {
+          content: "";
           position: absolute;
-          left: -6px;
-          top: 72px;
-          font-size: 132px;
-          color: #ffffff;
+          left: 148px;
+          right: 30px;
+          top: 0;
+          height: 1px;
+          background: #ecebe8;
         }
-        .it .t span {
-          display: inline-block;
+        .row .chip {
+          --s: 84px;
+          background: #f2f2f4;
+          color: #111113;
+        }
+        .row .t {
           position: relative;
+          font-weight: 700;
+          font-size: 50px;
+          letter-spacing: -0.035em;
+          color: #111113;
+          white-space: nowrap;
         }
         .strike {
           position: absolute;
           left: -6px;
           right: -6px;
-          top: 52%;
-          height: 10px;
+          top: 54%;
+          height: 5px;
+          border-radius: 3px;
           background: #f2382e;
           transform: scaleX(0);
           transform-origin: left center;
         }
-        .it.last {
-          border-top-color: #2b4cff;
-        }
-        .it.last .t {
-          color: #2b4cff;
-        }
-        .it.last .k {
-          color: #2b4cff;
-        }
-        .tick {
-          position: absolute;
-          right: 0;
-          top: 110px;
-          --s: 96px;
-          background: #2b4cff;
-          color: #ffffff;
+        .mk {
+          margin-left: auto;
+          --s: 60px;
           opacity: 0;
+        }
+        .mk.x {
+          background: #fdecea;
+          color: #d62a20;
+        }
+        .row.win {
+          background: #2b4cff;
+        }
+        .row.win::before {
+          display: none;
+        }
+        .row.win .chip {
+          background: #ffffff;
+          color: #2b4cff;
+        }
+        .row.win .t {
+          color: #ffffff;
+        }
+        .mk.ok {
+          background: #ffffff;
+          color: #2b4cff;
         }
       </style>
 
       <div id="root" data-composition-id="__ID__" data-width="1080" data-height="1920">
-        <div id="scr">
-          <div class="ground ink"></div>
-          <div class="it" id="i0" style="top: 560px"><span class="k label">01</span><div class="t hed" id="t0"><span>No fluff.<i class="strike" id="k0"></i></span></div></div>
-          <div class="it" id="i1" style="top: 800px"><span class="k label">02</span><div class="t hed" id="t1"><span>No jargon.<i class="strike" id="k1"></i></span></div></div>
-          <div class="it last" id="i2" style="top: 1040px"><span class="k label">03</span><div class="t hed"><span id="t2">Just results.</span></div><div class="chip tick" id="tick">{{F:check}}</div></div>
-        </div>
+        <div class="sh sheet" id="sh"></div>
       </div>
 
       <script>
         (function () {
           const C = {{CFG}};
           const tl = gsap.timeline({ paused: true });
-          C.at.forEach((t, i) => {
-            tl.fromTo("#i" + i, { opacity: 0 }, { opacity: 1, duration: 0.01 }, t - 0.06);
-            tl.fromTo("#i" + i + " .t span", { yPercent: 40, opacity: 0 }, { yPercent: 0, opacity: 1, duration: 0.42, ease: "expo.out" }, t - 0.06);
+          const H = 136, sh = document.getElementById("sh");
+          C.rows.forEach((r, i) => {
+            const win = i === C.rows.length - 1;
+            const el = document.createElement("div");
+            el.className = "row" + (win ? " win" : "");
+            el.id = "r" + i;
+            el.style.top = i * H + "px";
+            el.innerHTML =
+              '<div class="chip">' + r.icon + '</div><span class="t" id="t' + i + '">' + r.text + (win ? "" : '<i class="strike" id="k' + i + '"></i>') + "</span>" +
+              '<div class="chip mk ' + (win ? "ok" : "x") + '" id="m' + i + '"><i class="ico f">' + (win ? C.check : C.close) + "</i></div>";
+            sh.appendChild(el);
+            const bottom = 100 - (((i + 1) * H) / 408) * 100;
+            tl.to("#sh", { clipPath: "inset(0% 0% " + Math.max(0, bottom).toFixed(2) + "% 0% round 24px)", duration: 0.42, ease: "expo.out" }, C.at[i] - 0.06);
+            tl.fromTo(el, { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.42, ease: "expo.out" }, C.at[i] - 0.02);
           });
           C.x.forEach((t, i) => {
             tl.to("#k" + i, { scaleX: 1, duration: 0.28, ease: "expo.out" }, t);
-            tl.to("#t" + i, { color: "#4a4a50", duration: 0.25 }, t + 0.08);
+            tl.to("#t" + i, { color: "#8c8c92", duration: 0.25 }, t + 0.08);
+            tl.fromTo("#m" + i, { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.32, ease: "expo.out" }, t + 0.06);
           });
-          tl.fromTo("#tick", { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.36, ease: "expo.out" }, C.tick);
-          tl.to("#scr", { clipPath: "inset(0% 0% 100% 0%)", duration: 0.3, ease: "expo.in" }, C.out - 0.2);
+          const w = C.rows.length - 1;
+          tl.fromTo("#m" + w, { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.32, ease: "expo.out" }, C.tick);
+          tl.to("#sh", { opacity: 0, y: 20, duration: 0.2, ease: "power2.in" }, C.out);
           window.__timelines["__ID__"] = tl;
         })();
       </script>

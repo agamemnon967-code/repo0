@@ -8,15 +8,9 @@
     <template>
       <style>
 {{BASE_CSS}}
-        /* "…have a website": a Safari-style address bar over her types the domain.
-           Jump cut: a paper screen wipes up from the bottom and the bar travels with it to the top
-           of a browser window; the page is her line set as an editorial headline. The screen wipes
-           off upward to hand back to her face for "doing nothing". */
-        #scr {
-          position: absolute;
-          inset: 0;
-          clip-path: inset(100% 0% 0% 0%);
-        }
+        /* "…have a website": a Safari-style address bar at chest types the domain. It stays in front
+           of her through "but honestly, it's just sitting there" (the room dims and her words rise
+           behind her, index.html DEPTH): the reload icon keeps turning, the page never loads. */
         .bar {
           position: absolute;
           left: 120px;
@@ -29,6 +23,7 @@
           padding: 0 30px;
           box-sizing: border-box;
           border-radius: 52px;
+          overflow: hidden;
           opacity: 0;
         }
         .bar .ico {
@@ -54,137 +49,15 @@
           vertical-align: -8px;
           background: #2b4cff;
         }
-        /* Browser window on the paper screen */
-        .win {
-          position: absolute;
-          left: 90px;
-          top: 470px;
-          width: 900px;
-          height: 900px;
-          border-radius: 28px;
-          background: #ffffff;
-          box-shadow:
-            0 0 0 1px rgba(17, 17, 19, 0.08),
-            0 50px 90px -40px rgba(40, 30, 10, 0.35);
-          overflow: hidden;
-        }
-        .chrome {
+        .prog {
           position: absolute;
           left: 0;
-          right: 0;
-          top: 0;
-          height: 96px;
-          border-bottom: 1px solid #ebe9e4;
-          background: #f8f7f4;
-          display: flex;
-          align-items: center;
-          padding: 0 30px;
-          gap: 26px;
-          box-sizing: border-box;
-        }
-        .lights {
-          display: flex;
-          gap: 10px;
-        }
-        .lights i {
-          width: 16px;
-          height: 16px;
-          border-radius: 50%;
-          background: #dcdad4;
-        }
-        .addr {
-          flex: 1;
-          height: 56px;
-          border-radius: 14px;
-          background: #ecebe6;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          gap: 10px;
-          font-weight: 500;
-          font-size: 28px;
-          color: #55555b;
-        }
-        .addr .ico {
-          font-size: 26px;
-          color: #6e6e74;
-        }
-        .chrome .ico.r {
-          font-size: 36px;
-          color: #6e6e74;
-        }
-        .page {
-          position: absolute;
-          left: 70px;
-          top: 170px;
-          right: 70px;
-          bottom: 60px;
-        }
-        .page .label {
-          position: absolute;
-          left: 0;
-          top: 0;
-          color: #6e6e74;
-        }
-        .page .rule {
-          left: 0;
-          top: 58px;
-          width: 760px;
-          background: #111113;
-          transform: scaleX(0);
-        }
-        .h {
-          position: absolute;
-          left: -6px;
-          color: #111113;
-        }
-        .h.a {
-          top: 120px;
-          font-size: 150px;
-        }
-        .h.b {
-          top: 262px;
-          font-size: 150px;
-        }
-        .h.c {
-          top: 404px;
-          font-size: 150px;
-          color: #2b4cff;
-        }
-        .h span {
-          display: inline-block;
-          opacity: 0;
-        }
-        .h.bh {
-          top: 120px;
-          font-size: 150px;
-          color: #111113;
-        }
-        .h.bh span {
-          opacity: 1;
-        }
-        .foot {
-          position: absolute;
-          left: 0;
-          right: 0;
           bottom: 0;
-          display: flex;
-          align-items: center;
-          gap: 16px;
-          border-top: 1px solid #ebe9e4;
-          padding-top: 26px;
-          font-weight: 500;
-          font-size: 28px;
-          color: #6e6e74;
-          opacity: 0;
-        }
-        .foot b {
-          font-weight: 700;
-          color: #111113;
-          font-variant-numeric: tabular-nums;
-        }
-        .spin {
-          font-size: 34px;
+          height: 5px;
+          width: 100%;
+          background: #2b4cff;
+          transform: scaleX(0);
+          transform-origin: left center;
         }
       </style>
 
@@ -192,26 +65,8 @@
         <div class="bar sheet" id="bar">
           {{I:lock}}
           <span class="typed"><span class="pre" id="pre"></span><span id="dom"></span><span class="caret" id="caret"></span></span>
-          {{I:refresh}}
-        </div>
-        <div id="scr">
-          <div class="ground paper"></div>
-          <div class="win" id="win">
-            <div class="chrome">
-              <div class="lights"><i></i><i></i><i></i></div>
-              <div class="addr">{{I:lock}}yourbusiness.in</div>
-              <i class="ico r">&#x{{CP:more_horiz}};</i>
-            </div>
-            <div class="page">
-              <div class="label" id="lb">But honestly,</div>
-              <div class="rule" id="ru"></div>
-              <div class="h hed bh" id="bh"><span id="b0">But</span><br /><span id="b1">honestly,</span></div>
-              <div class="h hed a"><span id="w0">It's</span> <span id="w1">just</span></div>
-              <div class="h hed b"><span id="w2">sitting</span></div>
-              <div class="h hed c"><span id="w3">there.</span></div>
-              <div class="foot" id="foot"><i class="ico spin" id="spin">&#x{{CP:refresh}};</i>Last visitor <b id="dn">3 days</b> ago</div>
-            </div>
-          </div>
+          <i class="ico" id="rl">&#x{{CP:refresh}};</i>
+          <i class="prog" id="prog"></i>
         </div>
       </div>
 
@@ -221,32 +76,19 @@
           const tl = gsap.timeline({ paused: true });
           const PRE = "www.", DOM = "yourbusiness.in", ALL = PRE + DOM;
           const pre = document.getElementById("pre"), dom = document.getElementById("dom");
-
           tl.fromTo("#bar", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.4, ease: "power3.out" }, C.inAt);
           const n = { v: 0 };
           tl.to(n, {
             v: ALL.length, duration: C.typeDur, ease: "none",
             onUpdate: () => { const k = Math.round(n.v); pre.textContent = ALL.slice(0, Math.min(k, PRE.length)); dom.textContent = k > PRE.length ? ALL.slice(PRE.length, k) : ""; },
           }, C.typeAt);
-          tl.fromTo("#caret", { opacity: 1 }, { opacity: 0, duration: 0.01, repeat: 5, yoyo: true, repeatDelay: 0.22, ease: "none" }, C.typeAt + C.typeDur + 0.08);
-
-          // Jump cut: paper wipes up over her; the bar hands off to the window's own address bar.
-          tl.to("#scr", { clipPath: "inset(0% 0% 0% 0%)", duration: 0.5, ease: "expo.inOut" }, C.cut - 0.2);
-          tl.to("#bar", { y: -420, opacity: 0, duration: 0.5, ease: "expo.inOut" }, C.cut - 0.2);
-          tl.fromTo("#win", { y: 120 }, { y: 0, duration: 0.7, ease: "expo.out" }, C.cut - 0.1);
-          // "but honestly," fills the page first, then steps down to the small label for the main line.
-          C.bh.forEach((t, i) => tl.fromTo("#b" + i, { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.34, ease: "expo.out" }, t - 0.06));
-          tl.to("#bh", { opacity: 0, y: -30, duration: 0.22, ease: "power2.in" }, C.words[0] - 0.3);
-          tl.fromTo("#lb", { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.3, ease: "power3.out" }, C.words[0] - 0.16);
-          tl.to("#ru", { scaleX: 1, duration: 0.6, ease: "expo.out" }, C.cut + 0.2);
-          C.words.forEach((t, i) => tl.fromTo("#w" + i, { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.34, ease: "expo.out" }, t - 0.06));
-          tl.fromTo("#foot", { opacity: 0 }, { opacity: 1, duration: 0.3 }, C.footAt);
-          const d = { v: 3 }, dn = document.getElementById("dn");
-          tl.to(d, { v: 214, duration: C.out - C.footAt - 0.2, ease: "power2.in", onUpdate: () => (dn.textContent = Math.round(d.v) + " days") }, C.footAt + 0.1);
-          tl.fromTo("#spin", { rotation: 0 }, { rotation: 540, duration: C.out - C.footAt, ease: "none" }, C.footAt);
-
-          // Exit: wipe off upward, her face underneath.
-          tl.to("#scr", { clipPath: "inset(0% 0% 100% 0%)", duration: 0.34, ease: "expo.in" }, C.out - 0.24);
+          const blinks = Math.floor((C.out - C.typeAt - C.typeDur) / 0.5);
+          tl.fromTo("#caret", { opacity: 1 }, { opacity: 0, duration: 0.01, repeat: blinks, yoyo: true, repeatDelay: 0.24, ease: "none" }, C.typeAt + C.typeDur + 0.08);
+          // Loads forever: the progress rule creeps and stalls, the reload icon keeps turning.
+          tl.to("#prog", { scaleX: 0.28, duration: 0.5, ease: "expo.out" }, C.typeAt + C.typeDur + 0.1);
+          tl.to("#prog", { scaleX: 0.34, duration: C.out - C.typeAt - C.typeDur - 0.6, ease: "none" }, C.typeAt + C.typeDur + 0.6);
+          tl.fromTo("#rl", { rotation: 0 }, { rotation: 360 * 3, duration: C.out - C.idle, ease: "none" }, C.idle);
+          tl.to("#bar", { opacity: 0, y: 16, duration: 0.14, ease: "power2.in" }, C.out - 0.14);
           window.__timelines["__ID__"] = tl;
         })();
       </script>
