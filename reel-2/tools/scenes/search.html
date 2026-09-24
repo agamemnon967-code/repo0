@@ -8,13 +8,13 @@
     <template>
       <style>
 {{BASE_CSS}}
-        /* "…your competitors are already showing up on Google": a search bar types what her clients
-           would search, ranked competitor results drop in on "already showing up", and the bar lights
-           up on "Google". */
+        /* Blurred-footage scene (index.html). "…your competitors are already showing up on Google":
+           a white search bar types what her clients would search, navy ranked competitor results drop
+           in on "already showing up", and the bar glows blue on "Google". */
         .bar {
           position: absolute;
           left: 110px;
-          top: 842px;
+          top: 760px;
           width: 860px;
           height: 108px;
           display: flex;
@@ -23,18 +23,23 @@
           padding: 0 18px 0 34px;
           box-sizing: border-box;
           border-radius: 54px;
+          background: linear-gradient(180deg, #ffffff, #f1f4fb);
+          box-shadow:
+            inset 0 1.5px 0 #ffffff,
+            0 30px 60px -16px rgba(4, 6, 18, 0.7),
+            0 8px 18px -4px rgba(4, 6, 18, 0.35);
           opacity: 0;
         }
         .bar > .ico {
           font-size: 48px;
-          color: #15121a;
+          color: #3d6bff;
         }
         .q {
           flex: 1;
           font-weight: 700;
           font-size: 42px;
           letter-spacing: -0.015em;
-          color: #15121a;
+          color: #0f1634;
           white-space: nowrap;
         }
         .caret {
@@ -43,7 +48,7 @@
           height: 44px;
           margin-left: 3px;
           vertical-align: -8px;
-          background: #15121a;
+          background: #3d6bff;
           border-radius: 2px;
         }
         .bar .appi {
@@ -74,7 +79,6 @@
           font-size: 38px;
           padding-right: 3px;
           box-sizing: border-box;
-          text-shadow: 0 0 14px rgba(246, 249, 127, 0.5);
         }
         .row .rt {
           display: flex;
@@ -85,7 +89,7 @@
           font-weight: 800;
           font-size: 40px;
           letter-spacing: -0.02em;
-          color: #15121a;
+          color: #ffffff;
         }
         .row .st {
           display: flex;
@@ -93,15 +97,15 @@
         }
         .row .st .ico {
           font-size: 24px;
-          color: #f2b705;
+          color: #ffc53d;
         }
         .row .up {
           margin-left: auto;
           width: 58px;
           height: 58px;
           border-radius: 50%;
-          background: #eef8f1;
-          color: #1f9d55;
+          background: rgba(52, 224, 195, 0.16);
+          color: #6ff3dc;
           display: flex;
           align-items: center;
           justify-content: center;
@@ -112,11 +116,11 @@
       </style>
 
       <div id="root" data-composition-id="__ID__" data-width="1080" data-height="1920">
-        <div class="bar wcard" id="bar">
+        <div class="bar" id="bar">
           <div class="halo" id="bhalo"></div>
           {{I:search}}
           <span class="q"><span id="typed"></span><span class="caret" id="caret"></span></span>
-          <div class="appi lemon" id="go">{{I:travel_explore}}</div>
+          <div class="appi" id="go">{{I:travel_explore}}</div>
           <div class="shine" id="bsh"></div>
         </div>
         <div id="rows"></div>
@@ -129,16 +133,16 @@
           tl.fromTo("#bar", { opacity: 0, y: 40, scale: 0.94 }, { opacity: 1, y: 0, scale: 1, duration: 0.42, ease: "back.out(1.5)" }, C.inAt);
           tl.fromTo("#go", { scale: 0.3, rotation: -30 }, { scale: 1, rotation: 0, duration: 0.36, ease: "back.out(2.2)" }, C.inAt + 0.12);
           const Q = C.query, typed = document.getElementById("typed"), n = { v: 0 };
-          tl.fromTo(n, { v: 0 }, { v: Q.length, duration: C.typeDur, ease: "none", onUpdate: () => (typed.textContent = Q.slice(0, Math.round(n.v))) }, C.typeAt);
+          tl.to(n, { v: Q.length, duration: C.typeDur, ease: "none", onUpdate: () => (typed.textContent = Q.slice(0, Math.round(n.v))) }, C.typeAt);
           tl.fromTo("#caret", { opacity: 1 }, { opacity: 0, duration: 0.01, repeat: 5, yoyo: true, repeatDelay: 0.24, ease: "none" }, C.typeAt + C.typeDur + 0.08);
           tl.to("#go", { keyframes: [{ scale: 0.86, duration: 0.07 }, { scale: 1, duration: 0.18 }], ease: "power2.out" }, C.typeAt + C.typeDur + 0.04);
 
           const rows = document.getElementById("rows");
           C.rows.forEach((t, i) => {
             const el = document.createElement("div");
-            el.className = "row wcard";
+            el.className = "row ncard";
             el.id = "r" + i;
-            el.style.top = 842 + 108 + 16 + i * (104 + 12) + "px";
+            el.style.top = 760 + 108 + 16 + i * (104 + 12) + "px";
             el.innerHTML =
               '<div class="appi">' + (i + 1) + '</div><div class="rt"><span class="nm">Competitor</span><span class="st">' + C.star.repeat(5) + "</span></div>" +
               '<span class="up">' + C.upIcon + '</span><div class="shine" id="sh' + i + '"></div>';

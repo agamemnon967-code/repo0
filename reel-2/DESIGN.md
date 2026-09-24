@@ -4,28 +4,39 @@ Same system as the approved SOP reel (`jazzyease/coursera-test` → `reel-full/D
 `reel/DESIGN.md`): palette, caption finish, card kit and "no AI slop" rules are carried over
 unchanged. What is new here is the scene set and the layout shift for this framing.
 
-## v2: premium pass (user feedback on v1)
+## v3: presentation + palette (user feedback on v2)
 
-v1 reused the SOP reel's scenes too literally (typed word, spinner, text-only cards, a plain rail).
-v2 keeps the caption finish and colour moments but rebuilds every scene around one richer kit:
+**Palette, chosen against the room.** The set is all warm: cream walls, dusty-rose blazer, wood desk,
+white tee (sampled `#CBB49D`, `#BA8778`, `#E1D9CF`). White cards and lemon accents melted into it, so v3
+goes cool and opposite:
 
-- **Glossy app-icon tiles** (`.appi`): squircle, ink gradient with a lit lemon glyph, top gloss,
-  inner shade; `lemon`, `red` and `mute` variants cross-fade as state changes.
-- **Icons** are Material Symbols Rounded glyphs (filled, wght 500) from a 5 KB font subset
-  (`assets/fonts/Icons-Rounded-Filled.woff2`, map in `tools/icons.json`). Written as `{{I:name}}` in
-  scene templates, or `I("name")` in `build.py`. Still **no SVG** anywhere.
-- **Cards**: brighter white with a top highlight and a two-layer drop shadow; `.halo` adds a lemon
-  (or red) ring + bloom when a card lands or changes state. Dark-glass toasts (`.dglass`) for notifications.
-- **No SFX** (the user adds sound design separately).
+| Role | Hex | Use |
+| --- | --- | --- |
+| Navy glass | `#1D2858 → #0F1634` | panels (`.ncard`), cutaway ground `#1C2B6A → #070A1A` |
+| Electric blue | `#7AA3FF → #3D6BFF → #2547D6` | icon tiles, highlight panels, caption accent, halos |
+| Mint | `#8FF8E4 → #34E0C3` | positive states (tick, "Let's fix that", #1, new client) |
+| Coral | `#FF8B97 → #FF4D61` | negative states (strikes, ✕, "Isn't working", missed call) |
+| Ice / muted | `#F4F7FF` / `#8E9CC8` | text on navy |
+
+**Three presentation modes**, mixed so the graphics never all sit in front of her:
+
+- **Overlay** on sharp footage at chest height: URL bar, "We help" cards, digital-presence status.
+- **Blurred footage** (`SCENE_BG` in `build.py`): static blur plate + navy tint, graphic centre
+  stage, captions stay: phone lock screen, "found online", Google search.
+- **Full-screen cutaway** (`.screen`: navy ground, soft blue/mint light, dot grid) with
+  transitions: the URL bar rises into a browser page on the jump cut; zoom-blur push into the brand
+  screen; hard cut into the "No fluff" type screen with a zoom-through exit into the blur.
+
+Kit (`tools/scenes/_base.css`): `.ncard`, `.appi` (blue / mint / red / mute glossy tiles),
+`.halo`, `.screen`, `.disp` + `.bt` display type, `.eyebrow`, CSS `.xmark` / `.tick`. Icons are
+Material Symbols Rounded glyphs from a subset font (`tools/icons.json`); **no SVG**. **No SFX.**
 
 ## Rules carried over
 
-- Captions: heavy extended italic Archivo caps, flat bevel (white → cool grey), one tight dark
-  shadow; accent lemon `#F6F97F`, alarm red `#FF2E3F`. Line-1 words ghost in, accent words slide in
-  from the left, hero words slam 1.28 → 1. Groups hard-swap.
-- Graphics on sharp footage at chest height, face always visible; one light cutaway (brand).
-- UI chrome text (Visitors, NONE, Top result, New client, Competitor, the search query, the URL) is
-  illustrative; all other on-screen words are hers.
+- Captions: heavy extended italic Archivo caps, bevelled face, one tight dark shadow; accent now
+  electric blue, alarm red for negatives. Line-1 words ghost in, accent words slide in, heroes slam.
+- UI text (URL, DAY counter, Inbox/Phone lines, Your business, New client, Competitor, search
+  query) is illustrative; all other on-screen words are hers.
 
 ## Layout (1080×1920)
 
@@ -36,16 +47,17 @@ down ~120px: cards y850–1280, captions block top 1290 (centre ≈ y1455), came
 
 | Source s | Line | Scene | Type |
 | --- | --- | --- | --- |
-| 0–2.4 | "Most businesses in India have a website" | `site`: browser bar types `www.yourbusiness.in`, lemon search button pulses | chest card |
-| 2.6–5.7 | "…just sitting there doing nothing" | `site`: Visitors widget lands: LIVE pill, flat week chart, a scan finds nothing; on "nothing" LIVE → IDLE, 0 turns red, red halo; frame drains to B&W | chest cards |
-| 6.1–8.5 | "No leads, no calls, nothing" | `zero`: two widgets: mail / phone app tiles, 0 + NONE pill; inbox bounces, phone rings once, both mute; exit before the red backdrop on "nothing" | chest widgets |
-| 9.1–10.4 | "That's exactly why we" | captions, punch on "why" | face |
-| 10.4–12.0 | "started Verdexo Ventures" | `brand`: light cutaway, lemon "V" monogram tile + ink wordmark | cutaway |
-| 12.6–17.0 | "We help immigration consultants, study abroad agencies, and clinics" | `who`: card stack with lemon icon tiles (plane, cap, medical), each card glows as it's spoken | chest cards |
-| 17.0–20.4 | "get found online and get clients from it" | `found`: "Your business" result rises to #1, pin drops with ripple, stars, TOP RESULT, lemon halo; three dark "New client" toasts stack on "clients… from it" | chest cards |
-| 20.8–24.0 | "No fluff, no jargon, just results" | `nofluff`: red icon tiles (cloud, translate) struck + ✕ and muted; glowing lemon "Just results" with ink trend tile + ✓; blur transition out | chest cards |
-| 24.6–28.6 | "digital presence isn't working… let's fix that" | `status`: globe tile → red error tile + red halo (B&W) → lemon bolt tile + lemon halo (colour returns) | chest card |
-| 28.8–32.0 | "competitors are already showing up on Google" | `search`: query types "study abroad consultant", three ranked Competitor results with stars and trend badges; bar glows on "Google" | chest cards |
+| 0–2.4 | "Most businesses in India have a website" | `site`: navy URL bar at chest types `www.yourbusiness.in` | overlay |
+| 2.6–4.8 | "but honestly, it's just sitting there" | `site`: on the jump cut the bar rises and a page card unrolls on a navy screen; her words are the page (SITTING in blue), DAY counter runs to 365 | cutaway |
+| 4.8–5.7 | "doing nothing" | zoom-out through blur back to her; B&W + punch on "nothing" | face |
+| 6.1–7.9 | "No leads, no calls, nothing" | `phone`: footage blurs, phone rises on its lock screen; "No leads" / "No calls" notifications land as spoken, clear to "No notifications", screen switches off → red backdrop on her | blurred |
+| 9.1–10.4 | "That's exactly why we" | captions, punch on "why", push + blur into the cutaway | face |
+| 10.4–12.0 | "started Verdexo Ventures" | `brand`: navy screen, blue "V" tile with ring pulse, white / blue wordmark | cutaway |
+| 12.6–17.0 | "We help immigration consultants, study abroad agencies, and clinics" | `who`: navy cards with blue icon tiles, each glows as spoken | overlay |
+| 17.0–20.4 | "get found online and get clients from it" | `found`: navy result rises to #1 (pin, stars, TOP RESULT, glow); white "New client" toasts stack | blurred |
+| 20.8–24.0 | "No fluff, no jargon, just results" | `nofluff`: coral rows struck + muted, glowing blue JUST RESULTS panel with mint tile + tick; zoom-through into blur | cutaway |
+| 24.6–28.6 | "digital presence isn't working… let's fix that" | `status`: navy card, globe → coral error (B&W) → mint bolt (colour returns) | overlay |
+| 28.8–32.0 | "competitors are already showing up on Google" | `search`: white search bar types a query, navy ranked Competitor results, bar glows on "Google" | blurred |
 | 32.1–33.6 | "The question is, are you?" | captions, jump zoom, push-in through the 1.3s end freeze | face |
 
 ## Edit

@@ -8,13 +8,13 @@
     <template>
       <style>
 {{BASE_CSS}}
-        /* "…actually get found online": a top-ranked result card rises into place, the pin drops
-           with a ripple and the card lights up. "…and get clients from it": dark notification
-           toasts stack under it, one per beat. */
+        /* Blurred-footage scene (index.html). "…actually get found online": a navy result card rises
+           to #1, the pin drops with a ripple, stars fill and the card lights up. "…and get clients
+           from it": white notification toasts stack under it, one per beat. */
         .res {
           position: absolute;
           left: 110px;
-          top: 832px;
+          top: 760px;
           width: 860px;
           height: 176px;
           display: flex;
@@ -37,7 +37,7 @@
           position: absolute;
           inset: 0;
           border-radius: 30%;
-          border: 4px solid rgba(236, 241, 100, 0.95);
+          border: 4px solid rgba(122, 163, 255, 0.95);
           opacity: 0;
         }
         .meta {
@@ -50,7 +50,7 @@
           font-weight: 800;
           font-size: 48px;
           letter-spacing: -0.02em;
-          color: #15121a;
+          color: #ffffff;
           white-space: nowrap;
         }
         .stars {
@@ -60,38 +60,26 @@
         }
         .stars .ico {
           font-size: 36px;
-          color: #f2b705;
+          color: #ffc53d;
           opacity: 0;
         }
         .stars .tag {
           margin-left: 14px;
           padding: 5px 14px;
           border-radius: 10px;
-          background: #eef8f1;
-          color: #1f9d55;
+          background: rgba(52, 224, 195, 0.16);
+          color: #6ff3dc;
           font-weight: 800;
           font-size: 22px;
           letter-spacing: 0.08em;
           opacity: 0;
         }
         .rank {
-          flex: none;
-          width: 118px;
-          height: 118px;
-          border-radius: 30%;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          background: linear-gradient(160deg, #3b3a45 0%, #1c1b22 55%, #0f0e13 100%);
-          box-shadow:
-            inset 0 1.5px 0 rgba(255, 255, 255, 0.24),
-            0 10px 22px rgba(8, 6, 10, 0.32);
+          --s: 118px;
           font-style: italic;
           font-weight: 900;
           font-stretch: 122%;
-          font-size: 58px;
-          color: #f6f97f;
-          text-shadow: 0 0 18px rgba(246, 249, 127, 0.5);
+          font-size: 56px;
           padding-right: 4px;
           box-sizing: border-box;
           opacity: 0;
@@ -106,6 +94,12 @@
           gap: 20px;
           padding: 0 28px 0 14px;
           box-sizing: border-box;
+          border-radius: 26px;
+          background: linear-gradient(180deg, #ffffff, #eef2fb);
+          box-shadow:
+            inset 0 1.5px 0 #ffffff,
+            0 24px 48px -14px rgba(4, 6, 18, 0.6),
+            0 6px 14px -4px rgba(4, 6, 18, 0.3);
           opacity: 0;
         }
         .toast .appi {
@@ -115,25 +109,25 @@
           font-weight: 800;
           font-size: 36px;
           letter-spacing: -0.01em;
-          color: #ffffff;
+          color: #0f1634;
         }
         .toast .now {
           margin-left: auto;
           font-weight: 600;
           font-size: 26px;
-          color: rgba(255, 255, 255, 0.5);
+          color: #7a86ad;
         }
       </style>
 
       <div id="root" data-composition-id="__ID__" data-width="1080" data-height="1920">
-        <div class="res wcard" id="res">
+        <div class="res ncard" id="res">
           <div class="halo" id="rhalo"></div>
-          <div class="pinwrap"><i class="ripple" id="rp1"></i><i class="ripple" id="rp2"></i><div class="appi lemon" id="pin">{{I:location_on}}</div></div>
+          <div class="pinwrap"><i class="ripple" id="rp1"></i><i class="ripple" id="rp2"></i><div class="appi" id="pin">{{I:location_on}}</div></div>
           <div class="meta">
             <div class="rname">Your business</div>
             <div class="stars">{{I:star}}{{I:star}}{{I:star}}{{I:star}}{{I:star}}<span class="tag" id="tag">TOP RESULT</span></div>
           </div>
-          <div class="rank" id="rank">#1</div>
+          <div class="rank appi mint" id="rank">#1</div>
           <div class="shine" id="rsh"></div>
         </div>
         <div id="toasts"></div>
@@ -157,10 +151,10 @@
           const host = document.getElementById("toasts");
           C.toasts.forEach((t, i) => {
             const el = document.createElement("div");
-            el.className = "toast dglass";
+            el.className = "toast";
             el.id = "tt" + i;
-            el.style.top = 1026 + i * 96 + "px";
-            el.innerHTML = '<div class="appi lemon">' + C.icon + '</div><span class="tt">New client</span><span class="now">now</span>';
+            el.style.top = 954 + i * 96 + "px";
+            el.innerHTML = '<div class="appi mint">' + C.icon + '</div><span class="tt">New client</span><span class="now">now</span>';
             host.appendChild(el);
             tl.fromTo(el, { opacity: 0, y: -40, scale: 0.92 }, { opacity: 1, y: 0, scale: 1, duration: 0.38, ease: "back.out(1.7)" }, t);
           });

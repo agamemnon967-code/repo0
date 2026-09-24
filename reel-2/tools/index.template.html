@@ -84,6 +84,27 @@
         background: var(--white);
         opacity: 0;
       }
+      /* Blurred-footage scenes: static blur plate + cool navy tint, faded in/out per scene. */
+      .sbg {
+        position: absolute;
+        inset: 0;
+        opacity: 0;
+      }
+      .sbg video {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transform: scale(1.08);
+      }
+      .sdim {
+        position: absolute;
+        inset: 0;
+        background:
+          radial-gradient(ellipse 80% 55% at 50% 45%, rgba(20, 32, 90, 0.35), rgba(6, 9, 26, 0.7)),
+          linear-gradient(180deg, rgba(8, 12, 32, 0.35), rgba(8, 12, 32, 0.55));
+      }
       /* Darkens desk/hands under the captions (applies above the cutout). */
       #scrim {
         position: absolute;
@@ -117,6 +138,8 @@
 {{BLUR}}
         </div>
       </div>
+      <!-- Blurred-footage scene backgrounds -->
+{{SCENE_BG}}
       <div id="scrim"></div>
       <div id="flash"></div>
 

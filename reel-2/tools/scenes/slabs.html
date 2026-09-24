@@ -32,19 +32,25 @@
           position: relative;
           flex: none;
         }
-        .slab.lemon {
-          border-radius: 26px;
-          background: linear-gradient(180deg, #feffc4 0%, #f6f98a 55%, #edf164 100%);
+        /* Highlight card: electric-blue glass. */
+        .slab.hi {
+          border-radius: 30px;
+          background: linear-gradient(160deg, #6e97ff 0%, #3d6bff 50%, #2a4fe0 100%);
           box-shadow:
-            inset 0 0 0 5px #fdfed2,
-            inset 0 -8px 14px rgba(170, 170, 30, 0.3),
-            0 0 34px rgba(248, 250, 140, 0.45),
-            0 18px 40px rgba(8, 6, 10, 0.38);
+            inset 0 1.5px 0 rgba(255, 255, 255, 0.45),
+            inset 0 -6px 14px rgba(10, 20, 90, 0.3),
+            0 0 50px rgba(61, 107, 255, 0.55),
+            0 30px 60px -16px rgba(4, 6, 18, 0.7);
+        }
+        .slab.hi .appi {
+          background: linear-gradient(160deg, #1d2858, #0f1634);
+          box-shadow: inset 0 1.5px 0 rgba(255, 255, 255, 0.16), 0 8px 18px rgba(4, 6, 18, 0.35);
+          color: #8ff8e4;
         }
         .slab .ctext {
           position: relative;
         }
-        .slab.lemon .ctext {
+        .slab.hi .ctext {
           font-style: italic;
           font-weight: 900;
           font-stretch: 122%;
@@ -65,7 +71,8 @@
           height: 6px;
           margin-top: -3px;
           border-radius: 3px;
-          background: #e0162a;
+          background: #ff4d61;
+          box-shadow: 0 0 12px rgba(255, 77, 97, 0.6);
           transform: scaleX(0);
           transform-origin: left center;
         }
@@ -121,7 +128,7 @@
 
           C.slabs.forEach((s, i) => {
             const el = document.createElement("div");
-            el.className = "slab " + (s.lemon ? "lemon" : "wcard") + (s.icon ? " has-tile" : "");
+            el.className = "slab " + (s.hi ? "hi" : "ncard") + (s.icon ? " has-tile" : "");
             el.id = "s" + i;
             el.style.top = C.top + i * (C.h + C.gap) + "px";
             el.style.height = C.h + "px";
@@ -129,13 +136,13 @@
               ? '<div class="tw" id="t' + i + '"><div class="appi ' + (s.tone || "") + '">' + s.icon + "</div>" +
                 (s.right && s.right.kind === "x" ? '<div class="appi mute over" data-layout-allow-overlap id="m' + i + '">' + s.icon + "</div>" : "") + "</div>"
               : "";
-            const halo = s.halo ? '<div class="halo ' + (s.halo === "red" ? "red" : "") + '" id="h' + i + '"></div>' : "";
+            const halo = s.halo ? '<div class="halo ' + (s.halo === "blue" ? "" : s.halo) + '" id="h' + i + '"></div>' : "";
             const strike = s.right && s.right.kind === "x" ? '<span class="strike" id="k' + i + '"></span>' : "";
             const right = s.right ? '<div class="right" id="r' + i + '">' + RIGHT[s.right.kind] + "</div>" : "";
             el.innerHTML = halo + tile + '<div class="ctext">' + s.text + strike + "</div>" + right + '<div class="shine" id="sh' + i + '"></div>';
             host.appendChild(el);
 
-            if (s.lemon) {
+            if (s.hi) {
               tl.fromTo(el, { opacity: 0, scale: 1.18 }, { opacity: 1, scale: 1, duration: 0.2, ease: "power3.out" }, s.at);
             } else {
               tl.fromTo(el, { opacity: 0, y: 36, scale: 0.94 }, { opacity: 1, y: 0, scale: 1, duration: 0.36, ease: "back.out(1.5)" }, s.at);
@@ -150,13 +157,13 @@
               const r = s.right;
               if (r.kind === "x") {
                 tl.to("#k" + i, { scaleX: 1, duration: 0.24, ease: "power2.inOut" }, r.at);
-                tl.to("#s" + i + " .ctext", { color: "#9a9ca6", duration: 0.2 }, r.at + 0.1);
+                tl.to("#s" + i + " .ctext", { color: "#5d6890", duration: 0.2 }, r.at + 0.1);
                 if (s.icon) tl.to("#m" + i, { opacity: 1, duration: 0.2 }, r.at + 0.1);
               }
               tl.fromTo("#r" + i, { opacity: 0, scale: 0, rotation: -90 }, { opacity: 1, scale: 1, rotation: 0, duration: 0.3, ease: "back.out(2.2)" }, r.at + (r.kind === "x" ? 0.12 : 0));
             }
           });
-          if (C.dim != null) tl.to(".slab.wcard", { opacity: 0.55, duration: 0.2, ease: "power2.out" }, C.dim);
+          if (C.dim != null) tl.to(".slab.ncard", { opacity: 0.55, duration: 0.2, ease: "power2.out" }, C.dim);
           if (C.outAt != null) tl.to("#slabs", { opacity: 0, y: 24, duration: 0.18, ease: "power2.in" }, C.outAt);
           window.__timelines["__ID__"] = tl;
         })();

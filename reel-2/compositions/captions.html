@@ -25,7 +25,7 @@
       :root {
         --night: #0e0b10;
         --white: #fbfbf6;
-        --lime: #f6f97f;
+        --lime: #7fa3ff;
         --alarm: #ff2e3f;
       }
       #root {
@@ -117,10 +117,11 @@
         color: transparent;
         text-shadow: none;
       }
+      /* Accent tone ("lime" key kept for the build data): electric blue, picked to contrast the warm room. */
       .w.lime {
-        color: #f6f97f;
-        --fill: linear-gradient(180deg, #feffc9 0%, #fbfd9c 45%, #f1f56a 62%, #d9de45 100%);
-        --sh: rgba(16, 16, 4, 0.78);
+        color: #8fb0ff;
+        --fill: linear-gradient(180deg, #eef3ff 0%, #b7ccff 42%, #7fa3ff 62%, #5a86ff 100%);
+        --sh: rgba(4, 8, 30, 0.82);
       }
       .w.red {
         color: #ff3344;
@@ -173,7 +174,7 @@
       const wi = (i) => W[i][0];
 
       // Caption groups (source s). l1 = small white line, l2 = accent lines; size = accent px.
-      const GROUPS = [{"l1": [0, 1], "l2": [[2, 3]], "tone": "lime", "size": 104, "start": 0.0, "end": 1.34}, {"l1": [4, 5], "l2": [[6]], "tone": "white", "size": 128, "start": 1.34, "hero": [6], "end": 2.76}, {"l1": [7, 8], "l2": [[9, 10, 11, 12]], "tone": "white", "size": 84, "start": 2.76, "end": 4.88}, {"l1": [13], "l2": [[14]], "tone": "red", "size": 128, "start": 4.88, "hero": [14], "end": 6.1}, {"l1": [], "l2": [[19]], "tone": "red", "size": 128, "start": 7.94, "hero": [19], "end": 9.2}, {"l1": [20, 21], "l2": [[22]], "tone": "lime", "size": 128, "start": 9.2, "hero": [22], "end": 10.44}, {"l1": [36], "l2": [[37, 38, 39]], "tone": "lime", "size": 100, "start": 16.98, "end": 18.52}, {"l1": [40, 41], "l2": [[42]], "tone": "lime", "size": 128, "start": 18.52, "hero": [42], "end": 19.8}, {"l1": [], "l2": [[43, 44]], "tone": "white", "size": 110, "start": 19.8, "end": 20.84}, {"l1": [51, 52], "l2": [[53, 54]], "tone": "white", "size": 96, "start": 24.76, "end": 25.9}, {"l1": [55, 56, 57, 58], "l2": [[59, 60]], "tone": "red", "size": 112, "start": 25.9, "end": 27.62}, {"l1": [61], "l2": [[62, 63]], "tone": "lime", "size": 128, "start": 27.62, "hero": [62, 63], "end": 28.96}, {"l1": [64, 65], "l2": [[66]], "tone": "white", "size": 110, "start": 28.96, "end": 29.98}, {"l1": [67, 68], "l2": [[69, 70]], "tone": "lime", "size": 108, "start": 29.98, "end": 31.16}, {"l1": [71], "l2": [[72]], "tone": "white", "size": 128, "start": 31.16, "hero": [72], "end": 32.08}, {"l1": [73, 74, 75], "l2": [[76, 77]], "tone": "lime", "size": 128, "start": 32.08, "hero": [76, 77], "end": 60}];
+      const GROUPS = [{"l1": [0, 1], "l2": [[2, 3]], "tone": "lime", "size": 104, "start": 0.0, "end": 1.34}, {"l1": [4, 5], "l2": [[6]], "tone": "white", "size": 128, "start": 1.34, "hero": [6], "end": 2.64}, {"l1": [13], "l2": [[14]], "tone": "red", "size": 128, "start": 4.88, "hero": [14], "end": 6.1}, {"l1": [], "l2": [[19]], "tone": "red", "size": 128, "start": 7.94, "hero": [19], "end": 9.2}, {"l1": [20, 21], "l2": [[22]], "tone": "lime", "size": 128, "start": 9.2, "hero": [22], "end": 10.44}, {"l1": [36], "l2": [[37, 38, 39]], "tone": "lime", "size": 100, "start": 16.98, "end": 18.52}, {"l1": [40, 41], "l2": [[42]], "tone": "lime", "size": 128, "start": 18.52, "hero": [42], "end": 19.8}, {"l1": [], "l2": [[43, 44]], "tone": "white", "size": 110, "start": 19.8, "end": 20.84}, {"l1": [51, 52], "l2": [[53, 54]], "tone": "white", "size": 96, "start": 24.76, "end": 25.9}, {"l1": [55, 56, 57, 58], "l2": [[59, 60]], "tone": "red", "size": 112, "start": 25.9, "end": 27.62}, {"l1": [61], "l2": [[62, 63]], "tone": "lime", "size": 128, "start": 27.62, "hero": [62, 63], "end": 28.96}, {"l1": [64, 65], "l2": [[66]], "tone": "white", "size": 110, "start": 28.96, "end": 29.98}, {"l1": [67, 68], "l2": [[69, 70]], "tone": "lime", "size": 108, "start": 29.98, "end": 31.16}, {"l1": [71], "l2": [[72]], "tone": "white", "size": 128, "start": 31.16, "hero": [72], "end": 32.08}, {"l1": [73, 74, 75], "l2": [[76, 77]], "tone": "lime", "size": 128, "start": 32.08, "hero": [76, 77], "end": 60}];
 
       const LEAD = 0.04;
       const MAXW = 940;

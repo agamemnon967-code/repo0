@@ -8,11 +8,8 @@
     <template>
       <style>
 {{BASE_CSS}}
-        /* "…why we started Verdexo Ventures": the one light cutaway. Cream -> pale-lemon ground,
-           lemon monogram tile, ink wordmark as spoken. Hard cut in and out. */
-        #ground {
-          opacity: 0;
-        }
+        /* "…why we started Verdexo Ventures": full-screen navy cutaway (footage zooms + blurs into it,
+           see index.html). Electric-blue monogram tile, white wordmark, blue second line. */
         #grp {
           position: absolute;
           inset: 0;
@@ -21,67 +18,81 @@
         .kick {
           position: absolute;
           left: 0;
-          top: 560px;
+          top: 590px;
           width: 1080px;
           text-align: center;
-          font-size: 50px;
-          letter-spacing: 0.01em;
         }
         .kick span {
           display: inline-block;
-          margin: 0 0.12em;
+          margin: 0 0.18em;
           opacity: 0;
         }
         .mono {
           position: absolute;
-          left: 430px;
+          left: 425px;
           top: 680px;
-          width: 220px;
-          height: 220px;
-          border-radius: 58px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
+          --s: 230px;
           opacity: 0;
-          box-shadow:
-            inset 0 0 0 8px #fdfed2,
-            inset 0 -12px 22px rgba(170, 170, 30, 0.32),
-            0 0 60px rgba(240, 244, 90, 0.5),
-            0 34px 60px rgba(40, 40, 10, 0.28),
-            0 6px 14px rgba(40, 40, 10, 0.18);
         }
-        .mono .tnum {
+        .mono .v {
+          font-style: italic;
+          font-weight: 900;
+          font-stretch: 122%;
           font-size: 150px;
-          padding-right: 8px;
+          line-height: 1;
+          color: #ffffff;
+          padding-right: 10px;
+          text-shadow: 0 4px 14px rgba(10, 20, 90, 0.35);
+        }
+        .ring {
+          position: absolute;
+          left: 405px;
+          top: 660px;
+          width: 270px;
+          height: 270px;
+          border-radius: 30%;
+          box-shadow: 0 0 0 2px rgba(122, 163, 255, 0.7);
+          opacity: 0;
         }
         .mark {
           position: absolute;
           left: 0;
           width: 1080px;
           text-align: center;
-          white-space: nowrap;
         }
         .mark.m1 {
-          top: 960px;
-          font-size: 132px;
+          top: 980px;
+          font-size: 138px;
         }
         .mark.m2 {
-          top: 1106px;
-          font-size: 96px;
+          top: 1128px;
+          font-size: 100px;
         }
         .mark span {
           display: inline-block;
           opacity: 0;
         }
+        .rule {
+          position: absolute;
+          left: 390px;
+          top: 1262px;
+          width: 300px;
+          height: 4px;
+          border-radius: 2px;
+          background: linear-gradient(90deg, rgba(122, 163, 255, 0), #7aa3ff, rgba(122, 163, 255, 0));
+          transform: scaleX(0);
+        }
       </style>
 
       <div id="root" data-composition-id="__ID__" data-width="1080" data-height="1920">
-        <div class="ground" id="ground"></div>
+        <div class="screen" id="scr"><div class="grid"></div><div class="blob" id="blob" style="left: 90px; top: 360px"></div><div class="blob m" style="left: 380px; top: 1100px"></div></div>
         <div id="grp">
-          <div class="kick ink-cap" id="kick"><span>We</span><span>started</span></div>
-          <div class="mono ltile" id="mono"><span class="tnum">V</span><div class="shine" id="msh"></div></div>
-          <div class="mark m1 ink-cap"><span id="m1">Verdexo</span></div>
-          <div class="mark m2 ink-cap"><span id="m2" class="hl">Ventures</span></div>
+          <div class="kick eyebrow" id="kick"><span>We</span><span>started</span></div>
+          <i class="ring" id="ring"></i>
+          <div class="mono appi" id="mono"><span class="v">V</span><div class="shine" id="msh"></div></div>
+          <div class="mark m1 disp"><span id="m1">Verdexo</span></div>
+          <div class="mark m2 disp"><span id="m2" class="bt">Ventures</span></div>
+          <div class="rule" id="rule"></div>
         </div>
       </div>
 
@@ -89,13 +100,17 @@
         (function () {
           const C = {{CFG}};
           const tl = gsap.timeline({ paused: true });
-          tl.set("#ground", { opacity: 1 }, 0);
+          // Arrives out of the footage zoom-blur: settles from 1.12 with a quick fade.
+          tl.fromTo("#scr", { opacity: 0, scale: 1.12 }, { opacity: 1, scale: 1, duration: 0.5, ease: "expo.out" }, 0);
+          tl.fromTo("#blob", { x: 0 }, { x: 120, y: 80, duration: C.dur, ease: "sine.inOut" }, 0);
           tl.fromTo("#grp", { scale: 1 }, { scale: 1.035, duration: C.dur, ease: "none" }, 0);
-          C.kick.forEach((t, i) => tl.fromTo("#kick span:nth-child(" + (i + 1) + ")", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.2, ease: "power3.out" }, t));
-          tl.fromTo("#mono", { opacity: 0, scale: 0.4, rotation: -14 }, { opacity: 1, scale: 1, rotation: 0, duration: 0.42, ease: "back.out(2)" }, C.mono);
+          C.kick.forEach((t, i) => tl.fromTo("#kick span:nth-child(" + (i + 1) + ")", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.22, ease: "power3.out" }, t));
+          tl.fromTo("#mono", { opacity: 0, scale: 0.4, rotation: -14 }, { opacity: 1, scale: 1, rotation: 0, duration: 0.46, ease: "back.out(2)" }, C.mono);
+          tl.fromTo("#ring", { opacity: 0.9, scale: 0.85 }, { opacity: 0, scale: 1.35, duration: 0.8, ease: "power2.out" }, C.mono + 0.28);
           tl.fromTo("#msh", { "--sx": "-140%" }, { "--sx": "360%", duration: 0.7, ease: "power2.inOut" }, C.name + 0.2);
           tl.fromTo("#m1", { opacity: 0, scale: 1.26 }, { opacity: 1, scale: 1, duration: 0.18, ease: "power3.out" }, C.name - 0.04);
           tl.fromTo("#m2", { opacity: 0, x: -46, skewX: -10 }, { opacity: 1, x: 0, skewX: 0, duration: 0.24, ease: "expo.out" }, C.name2 - 0.04);
+          tl.fromTo("#rule", { scaleX: 0 }, { scaleX: 1, duration: 0.4, ease: "power3.out" }, C.name2 + 0.1);
           window.__timelines["__ID__"] = tl;
         })();
       </script>

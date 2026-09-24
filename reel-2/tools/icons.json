@@ -31,5 +31,17 @@
  "person": "f0d3",
  "handshake": "ebcb",
  "travel_explore": "e2db",
- "ads_click": "e762"
+ "ads_click": "e762",
+ "schedule": "efd6",
+ "notifications": "e7f5",
+ "arrow_forward": "e5c8",
+ "north_east": "f1e1",
+ "rocket_launch": "eb9b",
+ "auto_awesome": "e65f",
+ "signal_cellular_alt": "e202",
+ "wifi": "e63e",
+ "battery_full": "e1a5",
+ "do_not_disturb_on": "f08f",
+ "flashlight_on": "f00b",
+ "photo_camera": "e412"
 }

@@ -8,20 +8,42 @@
     <template>
       <style>
 {{BASE_CSS}}
-        /* "…have a website": a browser bar types a URL. "…just sitting there doing nothing": a live
-           traffic widget lands under it and reads zero; on "nothing" LIVE goes IDLE and the 0 turns red. */
-        .bar {
+        /* "…have a website": a navy URL bar at chest height types the domain over her.
+           Jump cut -> full-screen cutaway: the bar rises and the page card unrolls under it; the page is her
+           line ("but honestly, it's just sitting there") while a day counter runs. Zoom-out exit
+           back to her face for "doing nothing". */
+        #scr {
+          opacity: 0;
+        }
+        .win {
           position: absolute;
           left: 110px;
           top: 826px;
           width: 860px;
           height: 124px;
+          opacity: 0;
+        }
+        .body {
+          position: absolute;
+          left: 110px;
+          top: 610px;
+          width: 860px;
+          height: 770px;
+          overflow: hidden;
+          transform-origin: 50% 30%;
+          clip-path: inset(0% 0% 100% 0% round 30px);
+        }
+        .top {
+          position: absolute;
+          left: 0;
+          top: 0;
+          right: 0;
+          height: 124px;
           display: flex;
           align-items: center;
-          gap: 26px;
-          padding: 0 24px 0 32px;
+          gap: 24px;
+          padding: 0 22px 0 32px;
           box-sizing: border-box;
-          opacity: 0;
         }
         .dots {
           display: flex;
@@ -30,10 +52,9 @@
         }
         .dots i {
           display: block;
-          width: 19px;
-          height: 19px;
+          width: 18px;
+          height: 18px;
           border-radius: 50%;
-          box-shadow: inset 0 -2px 0 rgba(14, 11, 16, 0.12);
         }
         .dots i:nth-child(1) {
           background: #ff5f57;
@@ -46,36 +67,36 @@
         }
         .url {
           flex: 1;
-          height: 78px;
-          border-radius: 39px;
-          background: linear-gradient(180deg, #efeff2, #f6f6f8);
-          box-shadow: inset 0 1.5px 3px rgba(14, 11, 16, 0.09);
+          height: 76px;
+          border-radius: 38px;
+          background: #0a0f2a;
+          box-shadow: inset 0 0 0 1.5px rgba(150, 175, 255, 0.14), inset 0 2px 6px rgba(0, 0, 0, 0.35);
           display: flex;
           align-items: center;
           padding: 0 28px 0 24px;
           gap: 14px;
         }
         .url .ico {
-          font-size: 34px;
-          color: #15121a;
+          font-size: 32px;
+          color: #34e0c3;
         }
         .typed {
           font-weight: 700;
-          font-size: 42px;
-          letter-spacing: -0.015em;
-          color: #15121a;
+          font-size: 41px;
+          letter-spacing: -0.01em;
+          color: #ffffff;
           white-space: nowrap;
         }
         .typed .pre {
-          color: #9a9ca6;
+          color: #6d7aa6;
         }
         .caret {
           display: inline-block;
           width: 4px;
-          height: 44px;
+          height: 42px;
           margin-left: 3px;
           vertical-align: -8px;
-          background: #15121a;
+          background: #7aa3ff;
           border-radius: 2px;
         }
         .go {
@@ -85,181 +106,83 @@
         .go .ico {
           font-size: 34px;
         }
-
-        .wid {
+        .page {
           position: absolute;
-          left: 110px;
-          top: 966px;
+          left: 0;
+          right: 0;
+          top: -20px;
+          height: 770px;
+        }
+        .page > * {
+          position: absolute;
+          left: 0;
           width: 860px;
-          height: 300px;
-          box-sizing: border-box;
+          text-align: center;
+        }
+        .page .eyebrow {
+          top: 88px;
+          font-size: 44px;
+          letter-spacing: 0.16em;
+          color: #c9d6ff;
+        }
+        .l1 {
+          top: 196px;
+          font-size: 84px;
+        }
+        .l2 {
+          top: 312px;
+          font-size: 146px;
+        }
+        .l3 {
+          top: 470px;
+          font-size: 146px;
+        }
+        .page span.w {
+          display: inline-block;
           opacity: 0;
         }
-        .whead {
-          position: absolute;
-          left: 30px;
-          top: 28px;
-          right: 30px;
-          display: flex;
-          align-items: center;
-          gap: 22px;
-        }
-        .whead .appi {
-          --s: 76px;
-        }
-        .wlab {
-          font-weight: 800;
-          font-size: 42px;
-          letter-spacing: -0.02em;
-          color: #15121a;
-        }
-        .live {
-          position: relative;
-          margin-left: auto;
-          width: 150px;
-          height: 54px;
-          border-radius: 27px;
-          background: #eef8f1;
-        }
-        .live span {
-          position: absolute;
-          inset: 0;
+        .days {
+          top: 668px;
+          left: 280px !important;
+          width: 300px !important;
+          height: 64px;
+          border-radius: 32px;
+          background: rgba(122, 163, 255, 0.12);
+          box-shadow: inset 0 0 0 1.5px rgba(122, 163, 255, 0.28);
           display: flex;
           align-items: center;
           justify-content: center;
-          gap: 11px;
+          gap: 12px;
           font-weight: 800;
-          font-size: 25px;
-          letter-spacing: 0.1em;
-        }
-        .live .on {
-          color: #1f9d55;
-        }
-        .live .off {
-          color: #8a8d99;
+          font-size: 28px;
+          letter-spacing: 0.14em;
+          color: #c9d6ff;
           opacity: 0;
         }
-        .live b {
-          display: block;
-          width: 13px;
-          height: 13px;
-          border-radius: 50%;
-          background: currentColor;
-        }
-        .ring {
-          position: absolute;
-          left: 21px;
-          top: 14px;
-          width: 13px;
-          height: 13px;
-          border-radius: 50%;
-          border: 3px solid #1f9d55;
-          box-sizing: border-box;
-          opacity: 0;
-        }
-        .big {
-          position: absolute;
-          left: 38px;
-          top: 128px;
-          display: flex;
-          align-items: baseline;
-          gap: 16px;
-        }
-        .num {
-          font-style: italic;
-          font-weight: 900;
-          font-stretch: 122%;
-          font-size: 148px;
-          line-height: 1;
-          color: #15121a;
-          display: inline-block;
-          transform-origin: 30% 80%;
-        }
-        .unit {
-          font-weight: 700;
+        .days .ico {
           font-size: 32px;
-          color: #8a8d99;
-        }
-        .chart {
-          position: absolute;
-          left: 360px;
-          right: 34px;
-          top: 118px;
-          height: 150px;
-        }
-        .grid {
-          position: absolute;
-          left: 0;
-          right: 0;
-          height: 2px;
-          background: #f0f0f3;
-        }
-        .bars {
-          position: absolute;
-          left: 0;
-          right: 0;
-          bottom: 38px;
-          height: 110px;
-          display: flex;
-          align-items: flex-end;
-          justify-content: space-between;
-        }
-        .bars i {
-          display: block;
-          width: 46px;
-          height: 8px;
-          border-radius: 5px;
-          background: #e3e4e9;
-          transform-origin: 50% 100%;
-        }
-        .days {
-          position: absolute;
-          left: 0;
-          right: 0;
-          bottom: 0;
-          display: flex;
-          justify-content: space-between;
-        }
-        .days span {
-          width: 46px;
-          text-align: center;
-          font-weight: 700;
-          font-size: 22px;
-          color: #a3a5ae;
-        }
-        .scan {
-          position: absolute;
-          top: 0;
-          bottom: 38px;
-          left: 0;
-          width: 90px;
-          background: linear-gradient(90deg, rgba(246, 249, 127, 0), rgba(246, 249, 127, 0.55), rgba(246, 249, 127, 0));
-          opacity: 0;
+          color: #7aa3ff;
         }
       </style>
 
       <div id="root" data-composition-id="__ID__" data-width="1080" data-height="1920">
-        <div class="bar wcard" id="bar">
-          <div class="dots"><i></i><i></i><i></i></div>
-          <div class="url">{{I:lock}}<span class="typed"><span class="pre" id="pre"></span><span id="dom"></span><span class="caret" id="caret"></span></span></div>
-          <div class="appi lemon go" id="go">{{I:search}}</div>
+        <div class="screen" id="scr"><div class="grid"></div><div class="blob" id="blob" style="left: -160px; top: 120px"></div><div class="blob m" id="blob2" style="left: 420px; top: 1000px"></div></div>
+        <div class="win ncard" id="win">
+          <div class="top">
+            <div class="dots"><i></i><i></i><i></i></div>
+            <div class="url">{{I:lock}}<span class="typed"><span class="pre" id="pre"></span><span id="dom"></span><span class="caret" id="caret"></span></span></div>
+            <div class="appi go" id="go">{{I:arrow_forward}}</div>
+          </div>
           <div class="shine" id="bsh"></div>
         </div>
-        <div class="wid wcard" id="wid">
-          <div class="halo red" id="whalo"></div>
-          <div class="whead">
-            <div class="appi">{{I:monitoring}}</div>
-            <div class="wlab">Visitors</div>
-            <div class="live"><span class="on" id="on"><b id="dot"></b>LIVE</span><span class="off" id="off"><b></b>IDLE</span><i class="ring" id="ring"></i></div>
+        <div class="body ncard" id="body">
+          <div class="page">
+            <div class="eyebrow" id="eb">But honestly,</div>
+            <div class="disp l1"><span class="w" id="w0">It's</span> <span class="w" id="w1">just</span></div>
+            <div class="disp l2"><span class="w bt" id="w2">Sitting</span></div>
+            <div class="disp l3"><span class="w" id="w3">there</span></div>
+            <div class="days" id="days">{{I:schedule}}<span id="dn">DAY 1</span></div>
           </div>
-          <div class="big"><span class="num" id="num">0</span><span class="unit">today</span></div>
-          <div class="chart">
-            <i class="grid" style="top: 0"></i><i class="grid" style="top: 37px"></i><i class="grid" style="top: 74px"></i>
-            <div class="bars" id="bars"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
-            <div class="days"><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span><span>S</span></div>
-            <div class="scan" id="scan"></div>
-          </div>
-          <div class="shine" id="wsh"></div>
         </div>
       </div>
 
@@ -269,32 +192,40 @@
           const tl = gsap.timeline({ paused: true });
           const PRE = "www.", DOM = "yourbusiness.in", ALL = PRE + DOM;
           const pre = document.getElementById("pre"), dom = document.getElementById("dom");
-          tl.fromTo("#bar", { opacity: 0, y: 44, scale: 0.93 }, { opacity: 1, y: 0, scale: 1, duration: 0.42, ease: "back.out(1.5)" }, C.inAt);
+
+          // Phase A: URL bar over her.
+          tl.fromTo("#win", { opacity: 0, y: 44, scale: 0.93 }, { opacity: 1, y: 0, scale: 1, duration: 0.42, ease: "back.out(1.5)" }, C.inAt);
           tl.fromTo("#go", { scale: 0.3, rotation: -30 }, { scale: 1, rotation: 0, duration: 0.36, ease: "back.out(2.2)" }, C.inAt + 0.12);
-          // Typed from a counter so every seek lands on the same string.
           const n = { v: 0 };
-          tl.fromTo(n, { v: 0 }, {
+          tl.to(n, {
             v: ALL.length, duration: C.typeDur, ease: "none",
             onUpdate: () => { const k = Math.round(n.v); pre.textContent = ALL.slice(0, Math.min(k, PRE.length)); dom.textContent = k > PRE.length ? ALL.slice(PRE.length, k) : ""; },
           }, C.typeAt);
-          tl.fromTo("#caret", { opacity: 1 }, { opacity: 0, duration: 0.01, repeat: 9, yoyo: true, repeatDelay: 0.24, ease: "none" }, C.typeAt + C.typeDur + 0.1);
-          tl.to("#go", { keyframes: [{ scale: 0.86, duration: 0.07 }, { scale: 1, duration: 0.18 }], ease: "power2.out" }, C.typeAt + C.typeDur + 0.06);
+          tl.fromTo("#caret", { opacity: 1 }, { opacity: 0, duration: 0.01, repeat: 5, yoyo: true, repeatDelay: 0.22, ease: "none" }, C.typeAt + C.typeDur + 0.08);
+          tl.set("#caret", { opacity: 0 }, C.cut);
+          tl.to("#go", { keyframes: [{ scale: 0.84, duration: 0.07 }, { scale: 1, duration: 0.18 }], ease: "power2.out" }, C.typeAt + C.typeDur + 0.04);
           tl.fromTo("#bsh", { "--sx": "-140%" }, { "--sx": "360%", duration: 0.6, ease: "power2.inOut" }, C.typeAt + C.typeDur);
 
-          // Traffic widget: lands, the scan sweeps a flat week, LIVE keeps pulsing on nothing.
-          tl.fromTo("#wid", { opacity: 0, y: 40, scale: 0.94 }, { opacity: 1, y: 0, scale: 1, duration: 0.42, ease: "back.out(1.5)" }, C.idleAt);
-          tl.fromTo("#wsh", { "--sx": "-140%" }, { "--sx": "360%", duration: 0.6, ease: "power2.inOut" }, C.idleAt + 0.18);
-          tl.fromTo("#bars i", { scaleY: 0 }, { scaleY: 1, duration: 0.2, ease: "power2.out", stagger: 0.03 }, C.idleAt + 0.2);
-          tl.fromTo("#scan", { x: -90, opacity: 1 }, { x: 460, duration: 0.6, ease: "power1.inOut" }, C.idleAt + 0.34);
-          tl.set("#scan", { opacity: 0 }, C.idleAt + 0.95);
-          tl.fromTo("#ring", { scale: 1, opacity: 0.9 }, { scale: 2.8, opacity: 0, duration: 0.5, ease: "power2.out", repeat: 1 }, C.idleAt + 0.3);
-          // "nothing"
-          tl.to("#on", { opacity: 0, duration: 0.1 }, C.stopAt);
-          tl.to("#off", { opacity: 1, duration: 0.1 }, C.stopAt);
-          tl.to(".live", { backgroundColor: "#f1f1f3", duration: 0.1 }, C.stopAt);
-          tl.fromTo("#num", { scale: 1.3, color: "#15121a" }, { scale: 1, color: "#e0162a", duration: 0.2, ease: "power3.out" }, C.stopAt - 0.02);
-          tl.to("#whalo", { opacity: 1, duration: 0.16, ease: "power2.out" }, C.stopAt);
-          tl.to(["#wid", "#bar"], { keyframes: [{ x: 9 }, { x: -7 }, { x: 4 }, { x: 0 }], duration: 0.2, ease: "none" }, C.stopAt + 0.06);
+          // Phase B (on the jump cut): cutaway screen, the bar grows into the window.
+          tl.set("#scr", { opacity: 1 }, C.cut);
+          tl.fromTo("#scr", { scale: 1.08 }, { scale: 1, duration: 0.6, ease: "expo.out" }, C.cut);
+          tl.fromTo("#blob", { x: 0, y: 0 }, { x: 140, y: 60, duration: C.out - C.cut, ease: "sine.inOut" }, C.cut);
+          tl.fromTo("#blob2", { x: 0, y: 0 }, { x: -160, y: -80, duration: C.out - C.cut, ease: "sine.inOut" }, C.cut);
+          tl.to("#win", { y: -356, duration: 0.6, ease: "expo.inOut" }, C.cut);
+          tl.to("#body", { clipPath: "inset(0% 0% 0% 0% round 30px)", duration: 0.6, ease: "expo.inOut" }, C.cut + 0.12);
+          tl.fromTo("#eb", { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.24, ease: "power3.out" }, C.cut + 0.3);
+          C.words.forEach((t, i) => {
+            if (i >= 2) tl.fromTo("#w" + i, { opacity: 0, scale: 1.24 }, { opacity: 1, scale: 1, duration: 0.18, ease: "power3.out" }, t - 0.04);
+            else tl.fromTo("#w" + i, { opacity: 0, x: -34, skewX: -10 }, { opacity: 1, x: 0, skewX: 0, duration: 0.22, ease: "expo.out" }, t - 0.04);
+          });
+          tl.fromTo("#days", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.28, ease: "power3.out" }, C.daysAt);
+          const d = { v: 1 }, dn = document.getElementById("dn");
+          tl.to(d, { v: 365, duration: C.out - C.daysAt - 0.1, ease: "power1.in", onUpdate: () => (dn.textContent = "DAY " + Math.round(d.v)) }, C.daysAt + 0.1);
+          tl.to("#eb", { opacity: 0.5, duration: 0.2 }, C.words[0]);
+
+          // Exit: zoom-out back to her.
+          tl.to(["#win", "#body"], { scale: 0.9, opacity: 0, duration: 0.16, ease: "power2.in" }, C.out - 0.06);
+          tl.to("#scr", { opacity: 0, duration: 0.16, ease: "power2.in" }, C.out);
           window.__timelines["__ID__"] = tl;
         })();
       </script>
